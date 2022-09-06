@@ -1,35 +1,32 @@
-#include <stdio.h>
+#include "../include/Merge_Sort"
 
-#include "../include/Merge_Sort.h"
-
-void Merge_Sort(int arr[], int l, int r, int (*judge)(int, int))
+void Merge_Sort(int arr[], int l, int r, bool (*To_Swap)(int, int))
 {
-    //Special Condition
-    if (l == r)
+    // Special
+    if (r == l)
         return;
     
-    //Divide
-    int m = (l + r) / 2;
-    Merge_Sort(arr, l, m, judge);
-    Merge_Sort(arr, m + 1, r, judge);
+    // Division
+    int m = (r + l) / 2;
+    Merge_Sort(arr, l, m, To_Swap);
+    Merge_Sort(arr, m + 1, r, To_Swap);
 
-    //Merge
+    // Merging
     int cache[r - l + 1];
     int i = l, j = m + 1, k = 0;
     while (i <= m && j <= r)
     {
-        if (judge(arr[i], arr[j]))
+        if (To_Swap(arr[i], arr[j]))
         {
             cache[k] = arr[j];
             j += 1;
-            k += 1;
         }
         else 
         {
             cache[k] = arr[i];
             i += 1;
-            k += 1;
         }
+        k += 1;
     }
     while (i <= m)
     {
@@ -43,12 +40,8 @@ void Merge_Sort(int arr[], int l, int r, int (*judge)(int, int))
         j += 1;
         k += 1;
     }
-    i = l, k = 0;
-    while (k <= r - l)
-    {
+
+    // Overwrite
+    for (i = l, k = 0; i <= r; i += 1, k += 1)
         arr[i] = cache[k];
-        i += 1;
-        k += 1;
-    }
-    return;
 }
