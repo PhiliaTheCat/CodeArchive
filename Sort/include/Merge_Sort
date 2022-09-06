@@ -1,0 +1,5 @@
+#ifndef __INCLUDE_MERGE_SORT__
+    #define __INCLUDE_MERGE_SORT__
+    
+    void Merge_Sort(int arr[], int l, int r, bool (*To_Swap)(int, int));
+#endif
