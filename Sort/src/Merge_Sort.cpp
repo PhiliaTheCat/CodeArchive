@@ -1,6 +1,6 @@
 #include "../include/Merge_Sort"
 
-void Merge_Sort(int arr[], int l, int r, bool (*To_Swap)(int, int))
+template<typename Type> void Merge_Sort(Type arr[], int l, int r, bool (*To_Swap)(Type, Type))
 {
     // Special
     if (r == l)
@@ -12,7 +12,7 @@ void Merge_Sort(int arr[], int l, int r, bool (*To_Swap)(int, int))
     Merge_Sort(arr, m + 1, r, To_Swap);
 
     // Merging
-    int cache[r - l + 1];
+    Type cache[r - l + 1];
     int i = l, j = m + 1, k = 0;
     while (i <= m && j <= r)
     {

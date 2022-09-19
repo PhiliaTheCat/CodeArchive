@@ -1,5 +1,5 @@
 #ifndef __INCLUDE_BUBBLE_SORT__
     #define __INCLUDE_BUBBLE_SORT__
 
-    void Bubble_Sort(int arr[], int l, int r, bool (*To_Swap)(int, int));
+    template<typename Type> void Bubble_Sort(Type arr[], int l, int r, bool (*To_Swap)(Type, Type));
 #endif
