@@ -1,5 +1,7 @@
 #include "../include/Merge_Sort"
 
+template void Merge_Sort<int>(int arr[], int l, int r, bool (*To_Swap)(int, int));
+
 template<typename Type> void Merge_Sort(Type arr[], int l, int r, bool (*To_Swap)(Type, Type))
 {
     // Special
