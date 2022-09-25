@@ -1,5 +1,7 @@
 #include "../include/Bubble_Sort"
 
+template void Bubble_Sort<int>(int arr[], int l, int r, bool (*To_Swap)(int, int));
+
 template<typename Type> void Bubble_Sort(Type arr[], int l, int r, bool (*To_Swap)(Type, Type))
 {
     bool flag = true;
