@@ -1,7 +1,7 @@
-bin/Merge_Sort.exe: lib/Merge_Sort.o lib/Main_Test.o
+Merge_Sort: lib/Merge_Sort.o lib/Main_Test.o
 	g++ lib/Merge_Sort.o lib/Main_Test.o -o bin/Merge_Sort.exe
 
-bin/Bubble_Sort.exe: lib/Bubble_Sort.o lib/Main_Test.o
+Bubble_Sort: lib/Bubble_Sort.o lib/Main_Test.o
 	g++ lib/Bubble_Sort.o lib/Main_Test.o -o bin/Bubble_Sort.exe 
 
 lib/Merge_Sort.o: src/Merge_Sort.cpp

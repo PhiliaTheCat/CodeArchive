@@ -1,2 +1,2 @@
-*/lib/*.o
-*/bin/*.exe
+lib/*.o
+bin/*.exe
