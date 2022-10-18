@@ -1,0 +1,25 @@
+#include <iostream>
+
+#ifndef __INCLUDE_COMPLEX__
+    #define __INCLUDE_COMPLEX__
+
+    class Complex // Formally, a + bi
+    {
+        private:
+            double __a;
+            double __b;
+
+        public:
+            Complex();
+            Complex(double a, double b);
+
+            double mod(); // Module of a complex
+
+            Complex operator +(Complex sec);
+            Complex operator *(Complex sec);
+
+            friend std::ostream &operator <<(std::ostream &tar, Complex sample);            
+
+            ~Complex();
+    };
+#endif
