@@ -6,10 +6,7 @@ using namespace std;
 
 int main()
 {
-    double a, b;
-    cin >> a >> b;
-    Complex c(a, b);
-    cout << c << endl;
-    cout << a << endl;
-    cout << b << endl;
+    double a, b, c;
+    cin >> a >> b >> c;
+    Complex res(a, b);
 }
