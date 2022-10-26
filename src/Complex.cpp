@@ -160,7 +160,7 @@ Complex &Complex::operator *=(double &sec)
     return *this;
 }
 
-inline ostream &operator <<(ostream &tar, Complex &sample)
+ostream &operator <<(ostream &tar, Complex &sample)
 {
     if (sample.__b >= 0)
         tar << sample.__a << " + " << sample.__b << 'i';
