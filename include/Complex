@@ -23,6 +23,14 @@
             void operator +=(Complex sec);
             void operator +=(double sec);
 
+            Complex operator -();
+            Complex operator -(Complex sec);
+            Complex operator -(double sec);
+            friend Complex operator -(double fst, Complex sec);
+
+            void operator -=(Complex sec);
+            void operator -=(double sec);
+
             Complex operator *(Complex sec);
             Complex operator *(double sec);
             friend Complex operator *(double fst, Complex sec);

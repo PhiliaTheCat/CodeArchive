@@ -66,6 +66,49 @@ void Complex::operator +=(double sec)
     __a += sec;
 }
 
+Complex Complex::operator -()
+{
+    double a = -__a;
+    double b = -__b;
+    Complex res(a, b);
+    return res;
+}
+
+Complex Complex::operator -(Complex sec)
+{
+    double a = __a - sec.__a;
+    double b = __b - sec.__b;
+    Complex res(a, b);
+    return res;
+}
+
+Complex Complex::operator -(double sec)
+{
+    double a = __a - sec;
+    double b = __b;
+    Complex res(a, b);
+    return res;
+}
+
+Complex operator -(double fst, Complex sec)
+{
+    double a = fst - sec.__a;
+    double b = -sec.__b;
+    Complex res(a, b);
+    return res;
+}
+
+void Complex::operator -=(Complex sec)
+{
+    __a -= sec.__a;
+    __b -= sec.__b;
+}
+
+void Complex::operator -=(double sec)
+{
+    __a -= sec;
+}
+
 Complex Complex::operator *(Complex sec)
 {
     double a = __a * sec.__a - __b * sec.__b;
@@ -106,7 +149,10 @@ void Complex::operator *=(double sec)
 
 ostream &operator <<(ostream &tar, Complex sample)
 {
-    tar << sample.__a << " + " << sample.__b << 'i';
+    if (sample.__b >= 0)
+        tar << sample.__a << " + " << sample.__b << 'i';
+    else 
+        tar << sample.__a << " - " << -sample.__b << 'i';
     return tar;
 }
 
