@@ -1,8 +1,10 @@
 #include "../include/Merge_Sort"
+#include "../include/Complex"
 
 template void Merge_Sort<int>(int arr[], int l, int r, bool (*To_Swap)(int, int));
+template void Merge_Sort<Complex>(Complex arr[], int l, int r, bool (*To_Swap)(Complex, Complex));
 
-template<typename Type> void Merge_Sort(Type arr[], int l, int r, bool (*To_Swap)(Type, Type))
+template<class Type> void Merge_Sort(Type arr[], int l, int r, bool (*To_Swap)(Type, Type))
 {
     // Special
     if (r == l)

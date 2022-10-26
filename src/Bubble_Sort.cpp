@@ -1,8 +1,10 @@
 #include "../include/Bubble_Sort"
+#include "../include/Complex"
 
 template void Bubble_Sort<int>(int arr[], int l, int r, bool (*To_Swap)(int, int));
+template void Bubble_Sort<Complex>(Complex arr[], int l, int r, bool (*To_Swap)(Complex, Complex));
 
-template<typename Type> void Bubble_Sort(Type arr[], int l, int r, bool (*To_Swap)(Type, Type))
+template<class Type> void Bubble_Sort(Type arr[], int l, int r, bool (*To_Swap)(Type, Type))
 {
     bool flag = true;
     for (int j = r; j >= l + 1 && flag; j -= 1)
