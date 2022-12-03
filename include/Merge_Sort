@@ -1,5 +1,5 @@
 #ifndef __INCLUDE_MERGE_SORT__
     #define __INCLUDE_MERGE_SORT__
     
-    template<typename Type> void Merge_Sort(Type arr[], int l, int r, bool (*To_Swap)(Type, Type));
+    template<class Type> void Merge_Sort(Type arr[], int l, int r, bool (*To_Swap)(Type, Type));
 #endif
