@@ -1,10 +1,7 @@
 #include "../include/Bubble_Sort"
 #include "../include/Complex"
 
-template void Bubble_Sort<int>(int arr[], int l, int r, bool (*To_Swap)(int, int));
-template void Bubble_Sort<Complex>(Complex arr[], int l, int r, bool (*To_Swap)(Complex, Complex));
-
-template<class Type> void Bubble_Sort(Type arr[], int l, int r, bool (*To_Swap)(Type, Type))
+template<class TpSort> void Bubble_Sort(TpSort arr[], int l, int r, bool (*To_Swap)(TpSort, TpSort))
 {
     bool flag = true;
     for (int j = r; j >= l + 1 && flag; j -= 1)
@@ -15,7 +12,7 @@ template<class Type> void Bubble_Sort(Type arr[], int l, int r, bool (*To_Swap)(
             if (To_Swap(arr[i], arr[i + 1]))
             {
                 flag = true;
-                Type temp = arr[i];
+                TpSort temp = arr[i];
                 arr[i] = arr[i + 1];
                 arr[i + 1] = temp;
             }

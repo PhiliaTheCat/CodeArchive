@@ -1,5 +1,7 @@
 #ifndef __INCLUDE_MERGE_SORT__
     #define __INCLUDE_MERGE_SORT__
+
+    #define MAX_DEPTH 64
     
-    template<class Type> void Merge_Sort(Type arr[], int l, int r, bool (*To_Swap)(Type, Type));
+    template<class TpSort, class TpFunc> void Merge_Sort(TpSort arr[], int l, int r, bool (*To_Swap)(TpFunc, TpFunc));
 #endif

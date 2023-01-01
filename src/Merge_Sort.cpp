@@ -1,51 +1,100 @@
 #include "../include/Merge_Sort"
 #include "../include/Complex"
 
-template void Merge_Sort<int>(int arr[], int l, int r, bool (*To_Swap)(int, int));
-template void Merge_Sort<Complex>(Complex arr[], int l, int r, bool (*To_Swap)(Complex, Complex));
-
-template<class Type> void Merge_Sort(Type arr[], int l, int r, bool (*To_Swap)(Type, Type))
+template<class TpSort, class TpFunc> void Merge_Sort(TpSort arr[], int l, int r, bool (*To_Swap)(TpFunc, TpFunc))
 {
-    // Special
-    if (r == l)
-        return;
-    
-    // Division
-    int m = (r + l) / 2;
-    Merge_Sort(arr, l, m, To_Swap);
-    Merge_Sort(arr, m + 1, r, To_Swap);
-
-    // Merging
-    Type cache[r - l + 1];
-    int i = l, j = m + 1, k = 0;
-    while (i <= m && j <= r)
+    // Initiate Stack
+    class Stack_Element
     {
-        if (To_Swap(arr[i], arr[j]))
+        public:
+            int l;
+            int r;
+            int status;
+    };
+    Stack_Element *stack = new Stack_Element [MAX_DEPTH];
+    int sp = -1;
+
+    // Initialize
+    sp += 1;
+    stack[sp].l = l;
+    stack[sp].r = r;
+    stack[sp].status = 0;
+
+    // Process
+    while (sp > -1)
+    {
+        if (stack[sp].l == stack[sp].r)
+        // Return if l == r
         {
-            cache[k] = arr[j];
-            j += 1;
+            sp -= 1;
+            continue;
+        }
+        l = stack[sp].l;
+        r = stack[sp].r;
+        int m = (l + r) / 2;
+        int &status = stack[sp].status;
+        if (status == 0)
+        // Process left node
+        {
+            status += 1;
+            sp += 1;
+            stack[sp].l = l;
+            stack[sp].r = m;
+            stack[sp].status = 0;
+        }
+        else if (status == 1)
+        // Process right node
+        {
+            status += 1;
+            sp += 1;
+            stack[sp].l = m + 1;
+            stack[sp].r = r;
+            stack[sp].status = 0;
         }
         else 
+        // Process current node
         {
-            cache[k] = arr[i];
-            i += 1;
+            // Create cache
+            TpSort *cache = new TpSort [r - l + 1];
+            int i = l;
+            int j = m + 1;
+            int k = 0;
+            // Fill in
+            while (i <= m && j <= r)
+            {
+                if (To_Swap(arr[i], arr[j]))
+                {
+                    cache[k] = arr[j];
+                    j += 1;
+                    k += 1;
+                }
+                else 
+                {
+                    cache[k] = arr[i];
+                    i += 1;
+                    k += 1;
+                }
+            }
+            // Fill in remained
+            while (i <= m)
+            {
+                cache[k] = arr[i];
+                i += 1;
+                k += 1;
+            }
+            while (j <= r)
+            {
+                cache[k] = arr[j];
+                j += 1;
+                k += 1;
+            }
+            // Write back
+            for (i = l, k = 0; i <= r; i += 1, k += 1)
+                arr[i] = cache[k];
+            delete [] cache;
+            // Return
+            sp -= 1;
         }
-        k += 1;
     }
-    while (i <= m)
-    {
-        cache[k] = arr[i];
-        i += 1;
-        k += 1;
-    }
-    while (j <= r)
-    {
-        cache[k] = arr[j];
-        j += 1;
-        k += 1;
-    }
-
-    // Overwrite
-    for (i = l, k = 0; i <= r; i += 1, k += 1)
-        arr[i] = cache[k];
+    delete [] stack;
 }
