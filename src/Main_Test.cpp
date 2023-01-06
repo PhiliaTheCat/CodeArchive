@@ -1,6 +1,6 @@
 #include <iostream>
 
-#include "../include/Merge_Sort"
+#include "../include/Bubble_Sort"
 
 using namespace std;
 
@@ -14,7 +14,7 @@ int main()
         13, 22, -1, -12, 23,
         11, -32, 20, 203, 1
     };
-    Merge_Sort(arr, 0, 14, Non_Dec);
+    Bubble_Sort(arr, 0, 14, Non_Dec);
     for (int i = 0; i < 15; i += 1)
         cout << arr[i] << endl;
 }
