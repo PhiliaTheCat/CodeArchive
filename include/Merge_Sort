@@ -3,6 +3,8 @@
 
     #define MAX_DEPTH 64
     
+    template<class TpSort, class TpFunc> void Merge_Sort(TpSort arr[], int l, int r, bool (*To_Swap)(TpFunc, TpFunc));
+
     template<class TpSort, class TpFunc> void Merge_Sort(TpSort arr[], int l, int r, bool (*To_Swap)(TpFunc, TpFunc))
     {
         // Initiate Stack
