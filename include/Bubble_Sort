@@ -1,7 +1,7 @@
 #ifndef __INCLUDE_BUBBLE_SORT__
     #define __INCLUDE_BUBBLE_SORT__
 
-    template<class TpSort, class TpFunc> void Bubble_Sort(TpSort arr[], int l, int r, bool (*To_Swap)(TpFunc, TpFunc))；
+    template<class TpSort, class TpFunc> void Bubble_Sort(TpSort arr[], int l, int r, bool (*To_Swap)(TpFunc, TpFunc));
 
     template<class TpSort, class TpFunc> void Bubble_Sort(TpSort arr[], int l, int r, bool (*To_Swap)(TpFunc, TpFunc))
     {

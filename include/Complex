@@ -12,15 +12,18 @@
             double __b;
 
         public:
+            // Constructors
             Complex(const double &a = 0, const double &b = 0);
             Complex(const Complex &tar);
 
             double mod(); // Module of a complex
 
+            // Operators
             Complex &operator =(const Complex &tar);
             
             bool operator ==(const Complex &sec);
 
+            Complex operator +();
             Complex operator +(const Complex &sec);
             Complex operator +(const double &sec);
             friend Complex operator +(const double &fst, const Complex &sec);
