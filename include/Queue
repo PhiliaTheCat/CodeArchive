@@ -1,7 +1,7 @@
 #ifndef __INCLUDE_QUEUE__
     #define __INCLUDE_QUEUE__
 
-    #include <iostream>
+    #include <bits/c++config.h>
 
     using namespace std;
 

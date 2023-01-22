@@ -15,7 +15,6 @@ Complex::Complex(const Complex &tar): __a(tar.__a), __b(tar.__b)
 
 }
 
-
 double Complex::mod()
 {
     double x = pow(__a, 2);
@@ -24,14 +23,12 @@ double Complex::mod()
     return res;
 }
 
-
 Complex &Complex::operator =(const Complex &tar)
 {
     __a = tar.__a;
     __b = tar.__b;
     return *this;
 }
-
 
 bool Complex::operator ==(const Complex &sec)
 {
@@ -42,6 +39,10 @@ bool Complex::operator ==(const Complex &sec)
     return true;
 }
 
+Complex Complex::operator +()
+{
+    return Complex(*this);
+}
 
 Complex Complex::operator +(const Complex &sec)
 {
@@ -67,7 +68,6 @@ Complex operator +(const double &fst, const Complex &sec)
     return res;
 }
 
-
 Complex &Complex::operator +=(const Complex &sec)
 {
     __a += sec.__a;
@@ -80,7 +80,6 @@ Complex &Complex::operator +=(const double &sec)
     __a += sec;
     return *this;
 }
-
 
 Complex Complex::operator -()
 {
@@ -114,7 +113,6 @@ Complex operator -(const double &fst, const Complex &sec)
     return res;
 }
 
-
 Complex &Complex::operator -=(const Complex &sec)
 {
     __a -= sec.__a;
@@ -127,7 +125,6 @@ Complex &Complex::operator -=(const double &sec)
     __a -= sec;
     return *this;
 }
-
 
 Complex Complex::operator *(const Complex &sec)
 {
@@ -153,7 +150,6 @@ Complex operator *(const double &fst, const Complex &sec)
     return res;
 }
 
-
 Complex &Complex::operator *=(const Complex &sec)
 {
     double a = __a * sec.__a - __b * sec.__b;
@@ -169,7 +165,6 @@ Complex &Complex::operator *=(const double &sec)
     __b *= sec;
     return *this;
 }
-
 
 Complex Complex::operator /(const Complex &sec)
 {
@@ -197,7 +192,6 @@ Complex operator /(const double &fst, const Complex &sec)
     return res;
 }
 
-
 Complex &Complex::operator /=(const Complex &sec)
 {
     double root = sec.__a * sec.__a + sec.__b * sec.__b;
@@ -215,7 +209,6 @@ Complex &Complex::operator /=(const double &sec)
     return *this;
 }
 
-
 ostream &operator <<(ostream &tar, const Complex &sample)
 {
     if (sample.__b > 1e-12)
@@ -228,7 +221,6 @@ ostream &operator <<(ostream &tar, const Complex &sample)
         tar << 0;
     return tar;
 }
-
 
 Complex::~Complex()
 {
