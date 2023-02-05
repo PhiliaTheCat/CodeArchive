@@ -11,6 +11,7 @@ A semi-permanent repository of useful codes. Updated as my knowledge enriched.
 * Sort
     * Bubble
     * Merge
+    * Quick
 * Math
     * Complex
     * Modulus
