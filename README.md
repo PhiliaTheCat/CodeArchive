@@ -11,11 +11,6 @@ A semi-permanent repository of useful codes. Updated as my knowledge enriched.
 * Sort
     * Bubble
     * Merge
-* Container
-    * Queue
 * Math
     * Complex
-
-## Notice
-
-To build my (or your customized) program, use Make in the specific sub-directory, not in the main directory
+    * Modulus

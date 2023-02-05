@@ -3,8 +3,6 @@
 
 #include "../include/Complex"
 
-using namespace std;
-
 Complex::Complex(const double &a, const double &b): __a(a), __b(b)
 {
 
@@ -15,7 +13,12 @@ Complex::Complex(const Complex &tar): __a(tar.__a), __b(tar.__b)
 
 }
 
-double Complex::mod()
+Complex::~Complex()
+{
+    
+}
+
+double Complex::modulus()
 {
     double x = pow(__a, 2);
     double y = pow(__b, 2);
@@ -209,7 +212,7 @@ Complex &Complex::operator /=(const double &sec)
     return *this;
 }
 
-ostream &operator <<(ostream &tar, const Complex &sample)
+std::ostream &operator <<(std::ostream &tar, const Complex &sample)
 {
     if (sample.__b > 1e-12)
         tar << sample.__a << " + " << sample.__b << 'i';
@@ -220,9 +223,4 @@ ostream &operator <<(ostream &tar, const Complex &sample)
     else 
         tar << 0;
     return tar;
-}
-
-Complex::~Complex()
-{
-
 }

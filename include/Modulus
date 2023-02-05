@@ -1,0 +1,149 @@
+#ifndef __INCLUDE_MODULUS__
+    #define __INCLUDE_MODULUS__
+
+    #include <iostream>
+
+    template<int Cap> class Modulus;
+
+    template<int Cap> std::ostream &operator <<(std::ostream &lhs, const Modulus<Cap> &rhs);
+    template<int Cap> Modulus<Cap> operator +(const int &lhs, const Modulus<Cap> &rhs);
+    template<int Cap> Modulus<Cap> operator -(const int &lhs, const Modulus<Cap> &rhs);
+
+    template<int Cap> class Modulus
+    {
+        private:
+            int val;
+        public:
+            Modulus(const int &tar = 0);
+            Modulus(const Modulus &tar);
+
+            ~Modulus();
+
+            Modulus &operator =(const Modulus &rhs);
+
+            friend std::ostream &(::operator <<<Cap>)(std::ostream &lhs, const Modulus &rhs);
+
+            Modulus operator +();
+            Modulus operator +(const int &rhs);
+            Modulus operator +(const Modulus &rhs);
+            friend Modulus (::operator +<Cap>)(const int &lhs, const Modulus &rhs);
+
+            Modulus &operator +=(const int &rhs);
+            Modulus &operator +=(const Modulus &rhs);
+
+            Modulus operator -();
+            Modulus operator -(const int &rhs);
+            Modulus operator -(const Modulus &rhs);
+            friend Modulus (::operator -<Cap>)(const int &lhs, const Modulus &rhs);
+
+            Modulus &operator -=(const int &rhs);
+            Modulus &operator -=(const Modulus &rhs);
+
+    };
+
+    template<int Cap> Modulus<Cap>::Modulus(const int &tar): val(tar % Cap)
+    {
+
+    }
+
+    template<int Cap> Modulus<Cap>::Modulus(const Modulus<Cap> &tar): val(tar.val)
+    {
+
+    }
+
+    template<int Cap> Modulus<Cap>::~Modulus()
+    {
+
+    }
+
+    template<int Cap> Modulus<Cap> &Modulus<Cap>::operator =(const Modulus<Cap> &rhs)
+    {
+        val = rhs.val;
+        return *this;
+    }
+
+    template<int Cap> std::ostream &operator <<(std::ostream &lhs, const Modulus<Cap> &rhs)
+    {
+        lhs << rhs.val;
+        return lhs;
+    }
+
+    template<int Cap> Modulus<Cap> Modulus<Cap>::operator +()
+    {
+        return Modulus<Cap>(*this);
+    }
+
+    template<int Cap> Modulus<Cap> Modulus<Cap>::operator +(const int &rhs)
+    {
+        int sum = val + rhs;
+        return Modulus<Cap>(sum);
+    }
+
+    template<int Cap> Modulus<Cap> Modulus<Cap>::operator +(const Modulus<Cap> &rhs)
+    {
+        int sum = val + rhs.val;
+        return Modulus<Cap>(sum);
+    }
+
+    template<int Cap> Modulus<Cap> operator +(const int &lhs, const Modulus<Cap> &rhs)
+    {
+        int sum = lhs + rhs.val;
+        return Modulus<Cap>(sum);
+    }
+
+    template<int Cap> Modulus<Cap> &Modulus<Cap>::operator +=(const int &rhs)
+    {
+        int sum = val + rhs;
+        val = sum % Cap;
+        return *this;
+    }
+
+    template<int Cap> Modulus<Cap> &Modulus<Cap>::operator +=(const Modulus<Cap> &rhs)
+    {
+        int sum = val + rhs.val;
+        val = sum % Cap;
+        return *this;
+    }
+
+    template<int Cap> Modulus<Cap> Modulus<Cap>::operator -()
+    {
+        return Modulus<Cap>(Cap - val);
+    }
+
+    template<int Cap> Modulus<Cap> Modulus<Cap>::operator -(const int &rhs)
+    {
+        int cache = rhs % Cap;
+        int sum = val + Cap - cache;
+        return Modulus<Cap>(sum);
+    }
+
+    template<int Cap> Modulus<Cap> Modulus<Cap>::operator -(const Modulus<Cap> &rhs)
+    {
+        int temp = Cap - rhs.val;
+        int sum = val + temp;
+        return Modulus<Cap>(sum);
+    }
+
+    template<int Cap> Modulus<Cap> operator -(const int &lhs, const Modulus<Cap> &rhs)
+    {
+        int temp = Cap - rhs.val;
+        int sum = lhs + temp;
+        return Modulus<Cap>(sum);
+    }
+
+    template<int Cap> Modulus<Cap> &Modulus<Cap>::operator -=(const int &rhs)
+    {
+        int temp = rhs % Cap;
+        int sum = val + Cap - temp;
+        val = sum % Cap;
+        return *this;
+    }
+
+    template<int Cap> Modulus<Cap> &Modulus<Cap>::operator -=(const Modulus<Cap> &rhs)
+    {
+        int temp = Cap - rhs.val;
+        int sum = val + temp;
+        val = sum % Cap;
+        return *this;
+    }
+#endif

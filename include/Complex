@@ -3,8 +3,6 @@
 
     #include <iostream>
 
-    using namespace std;
-
     class Complex // Formally, a + bi
     {
         private:
@@ -16,7 +14,9 @@
             Complex(const double &a = 0, const double &b = 0);
             Complex(const Complex &tar);
 
-            double mod(); // Module of a complex
+            ~Complex();
+
+            double modulus(); // Module of a complex
 
             // Operators
             Complex &operator =(const Complex &tar);
@@ -53,8 +53,6 @@
             Complex &operator /=(const Complex &sec);
             Complex &operator /=(const double &sec);
 
-            friend ostream &operator <<(ostream &tar, const Complex &sample);            
-
-            ~Complex();
+            friend std::ostream &operator <<(std::ostream &tar, const Complex &sample);
     };
 #endif
