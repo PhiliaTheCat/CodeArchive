@@ -19,6 +19,8 @@
 
             ~Modulus();
 
+            operator int() const;
+
             Modulus &operator =(const Modulus &rhs);
 
             friend std::ostream &(::operator <<<Cap>)(std::ostream &lhs, const Modulus &rhs);
@@ -54,6 +56,11 @@
     template<int Cap> Modulus<Cap>::~Modulus()
     {
 
+    }
+
+    template<int Cap> Modulus<Cap>::operator int() const
+    {
+        return val;
     }
 
     template<int Cap> Modulus<Cap> &Modulus<Cap>::operator =(const Modulus<Cap> &rhs)
