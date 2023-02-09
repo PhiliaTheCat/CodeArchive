@@ -18,7 +18,7 @@ Complex::~Complex()
     
 }
 
-double Complex::modulus()
+double Complex::modulus() const
 {
     double x = pow(__a, 2);
     double y = pow(__b, 2);
@@ -33,7 +33,7 @@ Complex &Complex::operator =(const Complex &tar)
     return *this;
 }
 
-bool Complex::operator ==(const Complex &sec)
+bool Complex::operator ==(const Complex &sec) const
 {
     if (__a - sec.__a > 1e-12 || __a - sec.__a < -1e-12)
         return false;
@@ -42,12 +42,12 @@ bool Complex::operator ==(const Complex &sec)
     return true;
 }
 
-Complex Complex::operator +()
+Complex Complex::operator +() const
 {
     return Complex(*this);
 }
 
-Complex Complex::operator +(const Complex &sec)
+Complex Complex::operator +(const Complex &sec) const
 {
     double a = __a + sec.__a;
     double b = __b + sec.__b;
@@ -55,7 +55,7 @@ Complex Complex::operator +(const Complex &sec)
     return res;
 }
 
-Complex Complex::operator +(const double &sec)
+Complex Complex::operator +(const double &sec) const
 {
     double a = __a + sec;
     double b = __b;
@@ -84,7 +84,7 @@ Complex &Complex::operator +=(const double &sec)
     return *this;
 }
 
-Complex Complex::operator -()
+Complex Complex::operator -() const
 {
     double a = -__a;
     double b = -__b;
@@ -92,7 +92,7 @@ Complex Complex::operator -()
     return res;
 }
 
-Complex Complex::operator -(const Complex &sec)
+Complex Complex::operator -(const Complex &sec) const
 {
     double a = __a - sec.__a;
     double b = __b - sec.__b;
@@ -100,7 +100,7 @@ Complex Complex::operator -(const Complex &sec)
     return res;
 }
 
-Complex Complex::operator -(const double &sec)
+Complex Complex::operator -(const double &sec) const
 {
     double a = __a - sec;
     double b = __b;
@@ -129,7 +129,7 @@ Complex &Complex::operator -=(const double &sec)
     return *this;
 }
 
-Complex Complex::operator *(const Complex &sec)
+Complex Complex::operator *(const Complex &sec) const
 {
     double a = __a * sec.__a - __b * sec.__b;
     double b = __a * sec.__b + __b * sec.__a;
@@ -137,7 +137,7 @@ Complex Complex::operator *(const Complex &sec)
     return res;
 }
 
-Complex Complex::operator *(const double &sec)
+Complex Complex::operator *(const double &sec) const
 {
     double a = __a * sec;
     double b = __b * sec;
@@ -169,7 +169,7 @@ Complex &Complex::operator *=(const double &sec)
     return *this;
 }
 
-Complex Complex::operator /(const Complex &sec)
+Complex Complex::operator /(const Complex &sec) const
 {
     double root = sec.__a * sec.__a + sec.__b * sec.__b;
     double a = (__a * sec.__a + __b * sec.__b) / root;
@@ -178,7 +178,7 @@ Complex Complex::operator /(const Complex &sec)
     return res;
 }
 
-Complex Complex::operator /(const double &sec)
+Complex Complex::operator /(const double &sec) const
 {
     double a = __a / sec;
     double b = __b / sec;

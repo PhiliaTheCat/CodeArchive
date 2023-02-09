@@ -16,38 +16,38 @@
 
             ~Complex();
 
-            double modulus(); // Module of a complex
+            double modulus() const; // Module of a complex
 
             // Operators
             Complex &operator =(const Complex &tar);
             
-            bool operator ==(const Complex &sec);
+            bool operator ==(const Complex &sec) const;
 
-            Complex operator +();
-            Complex operator +(const Complex &sec);
-            Complex operator +(const double &sec);
+            Complex operator +() const;
+            Complex operator +(const Complex &sec) const;
+            Complex operator +(const double &sec) const;
             friend Complex operator +(const double &fst, const Complex &sec);
 
             Complex &operator +=(const Complex &sec);
             Complex &operator +=(const double &sec);
 
-            Complex operator -();
-            Complex operator -(const Complex &sec);
-            Complex operator -(const double &sec);
+            Complex operator -() const;
+            Complex operator -(const Complex &sec) const;
+            Complex operator -(const double &sec) const;
             friend Complex operator -(const double &fst, const Complex &sec);
 
             Complex &operator -=(const Complex &sec);
             Complex &operator -=(const double &sec);
 
-            Complex operator *(const Complex &sec);
-            Complex operator *(const double &sec);
+            Complex operator *(const Complex &sec) const;
+            Complex operator *(const double &sec) const;
             friend Complex operator *(const double &fst, const Complex &sec);
 
             Complex &operator *=(const Complex &sec);
             Complex &operator *=(const double &sec);
 
-            Complex operator /(const Complex &sec);
-            Complex operator /(const double &sec);
+            Complex operator /(const Complex &sec) const;
+            Complex operator /(const double &sec) const;
             friend Complex operator /(const double &fst, const Complex &sec);
 
             Complex &operator /=(const Complex &sec);

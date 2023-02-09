@@ -25,17 +25,17 @@
 
             friend std::ostream &(::operator <<<Cap>)(std::ostream &lhs, const Modulus &rhs);
 
-            Modulus operator +();
-            Modulus operator +(const int &rhs);
-            Modulus operator +(const Modulus &rhs);
+            Modulus operator +() const;
+            Modulus operator +(const int &rhs) const;
+            Modulus operator +(const Modulus &rhs) const;
             friend Modulus (::operator +<Cap>)(const int &lhs, const Modulus &rhs);
 
             Modulus &operator +=(const int &rhs);
             Modulus &operator +=(const Modulus &rhs);
 
-            Modulus operator -();
-            Modulus operator -(const int &rhs);
-            Modulus operator -(const Modulus &rhs);
+            Modulus operator -() const;
+            Modulus operator -(const int &rhs) const;
+            Modulus operator -(const Modulus &rhs) const;
             friend Modulus (::operator -<Cap>)(const int &lhs, const Modulus &rhs);
 
             Modulus &operator -=(const int &rhs);
@@ -75,18 +75,18 @@
         return lhs;
     }
 
-    template<int Cap> Modulus<Cap> Modulus<Cap>::operator +()
+    template<int Cap> Modulus<Cap> Modulus<Cap>::operator +() const
     {
         return Modulus<Cap>(*this);
     }
 
-    template<int Cap> Modulus<Cap> Modulus<Cap>::operator +(const int &rhs)
+    template<int Cap> Modulus<Cap> Modulus<Cap>::operator +(const int &rhs) const
     {
         int sum = val + rhs;
         return Modulus<Cap>(sum);
     }
 
-    template<int Cap> Modulus<Cap> Modulus<Cap>::operator +(const Modulus<Cap> &rhs)
+    template<int Cap> Modulus<Cap> Modulus<Cap>::operator +(const Modulus<Cap> &rhs) const
     {
         int sum = val + rhs.val;
         return Modulus<Cap>(sum);
@@ -112,19 +112,19 @@
         return *this;
     }
 
-    template<int Cap> Modulus<Cap> Modulus<Cap>::operator -()
+    template<int Cap> Modulus<Cap> Modulus<Cap>::operator -() const
     {
         return Modulus<Cap>(Cap - val);
     }
 
-    template<int Cap> Modulus<Cap> Modulus<Cap>::operator -(const int &rhs)
+    template<int Cap> Modulus<Cap> Modulus<Cap>::operator -(const int &rhs) const
     {
         int cache = rhs % Cap;
         int sum = val + Cap - cache;
         return Modulus<Cap>(sum);
     }
 
-    template<int Cap> Modulus<Cap> Modulus<Cap>::operator -(const Modulus<Cap> &rhs)
+    template<int Cap> Modulus<Cap> Modulus<Cap>::operator -(const Modulus<Cap> &rhs) const
     {
         int temp = Cap - rhs.val;
         int sum = val + temp;
