@@ -9,7 +9,7 @@
     template<class TpSort, class TpFunc> void Merge_Sort(TpSort arr[], int l, int r, bool (*To_Swap)(TpFunc, TpFunc))
     {
         // Initiate Stack
-        class Stack_Element
+        struct Stack_Element
         {
             public:
                 int l;
