@@ -1,7 +1,8 @@
 #ifndef __INCLUDE_QUICK_SORT__
     #define __INCLUDE_QUICK_SORT__
 
-    #define __BOUND 32
+    // Direct Insertion Requirement
+    #define __BOUND int(32)
 
     template<class TpSort, class TpFunc> void Quick_Sort(TpSort arr[], int l, int r, bool (*To_Swap)(TpFunc, TpFunc));
 

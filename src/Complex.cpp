@@ -4,19 +4,13 @@
 #include "../include/Complex"
 
 Complex::Complex(const double &a, const double &b): __a(a), __b(b)
-{
-
-}
+{}
 
 Complex::Complex(const Complex &tar): __a(tar.__a), __b(tar.__b)
-{
-
-}
+{}
 
 Complex::~Complex()
-{
-    
-}
+{}
 
 double Complex::modulus()
 {

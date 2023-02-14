@@ -1,10 +1,15 @@
 #ifndef __INCLUDE_MODULUS__
     #define __INCLUDE_MODULUS__
 
-    #include <iostream>
+    #include <ostream>
 
     template<int Cap> class Modulus;
 
+    template<int Cap> inline bool operator >(const int &lhs, const Modulus<Cap> &rhs);
+    template<int Cap> inline bool operator >=(const int &lhs, const Modulus<Cap> &rhs);
+    template<int Cap> inline bool operator <(const int &lhs, const Modulus<Cap> &rhs);
+    template<int Cap> inline bool operator <=(const int &lhs, const Modulus<Cap> &rhs);
+    template<int Cap> inline bool operator ==(const int &lhs, const Modulus<Cap> &rhs);
     template<int Cap> std::ostream &operator <<(std::ostream &lhs, const Modulus<Cap> &rhs);
     template<int Cap> Modulus<Cap> operator +(const int &lhs, const Modulus<Cap> &rhs);
     template<int Cap> Modulus<Cap> operator -(const int &lhs, const Modulus<Cap> &rhs);
@@ -21,19 +26,41 @@
 
             Modulus &operator =(const Modulus &rhs);
 
-            friend std::ostream &(::operator <<<Cap>)(std::ostream &lhs, const Modulus &rhs);
+            operator int() const;
 
-            Modulus operator +();
-            Modulus operator +(const int &rhs);
-            Modulus operator +(const Modulus &rhs);
+            inline bool operator >(const Modulus &rhs) const;
+            inline bool operator >(const int &rhs) const;
+            friend bool (::operator ><Cap>)(const int &lhs, const Modulus &rhs);
+
+            inline bool operator >=(const Modulus &rhs) const;
+            inline bool operator >=(const int &rhs) const;
+            friend bool (::operator >=<Cap>)(const int &lhs, const Modulus &rhs);
+
+            inline bool operator <(const Modulus &rhs) const;
+            inline bool operator <(const int &rhs) const;
+            friend bool (::operator < <Cap>)(const int &lhs, const Modulus &rhs);
+
+            inline bool operator <=(const Modulus &rhs) const;
+            inline bool operator <=(const int &rhs) const;
+            friend bool (::operator <=<Cap>)(const int &lhs, const Modulus &rhs);
+
+            inline bool operator ==(const Modulus &rhs) const;
+            inline bool operator ==(const int &rhs) const;
+            friend bool (::operator ==<Cap>)(const int &lhs, const Modulus &rhs);
+
+            friend std::ostream &(::operator << <Cap>)(std::ostream &lhs, const Modulus &rhs);
+
+            Modulus operator +() const;
+            Modulus operator +(const int &rhs) const;
+            Modulus operator +(const Modulus &rhs) const;
             friend Modulus (::operator +<Cap>)(const int &lhs, const Modulus &rhs);
 
             Modulus &operator +=(const int &rhs);
             Modulus &operator +=(const Modulus &rhs);
 
-            Modulus operator -();
-            Modulus operator -(const int &rhs);
-            Modulus operator -(const Modulus &rhs);
+            Modulus operator -() const;
+            Modulus operator -(const int &rhs) const;
+            Modulus operator -(const Modulus &rhs) const;
             friend Modulus (::operator -<Cap>)(const int &lhs, const Modulus &rhs);
 
             Modulus &operator -=(const int &rhs);
@@ -42,24 +69,98 @@
     };
 
     template<int Cap> Modulus<Cap>::Modulus(const int &tar): val(tar % Cap)
-    {
-
-    }
+    {}
 
     template<int Cap> Modulus<Cap>::Modulus(const Modulus<Cap> &tar): val(tar.val)
-    {
-
-    }
+    {}
 
     template<int Cap> Modulus<Cap>::~Modulus()
-    {
-
-    }
+    {}
 
     template<int Cap> Modulus<Cap> &Modulus<Cap>::operator =(const Modulus<Cap> &rhs)
     {
         val = rhs.val;
         return *this;
+    }
+
+    template<int Cap> Modulus<Cap>::operator int() const
+    {
+        return val;
+    }
+
+    template<int Cap> bool Modulus<Cap>::operator >(const Modulus<Cap> &rhs) const
+    {
+        return val > rhs.val;
+    }
+
+    template<int Cap> bool Modulus<Cap>::operator >(const int &rhs) const
+    {
+        return int(*this) > rhs;
+    }
+
+    template<int Cap> bool operator >(const int &lhs, const Modulus<Cap> &rhs)
+    {
+        return lhs > int(rhs);
+    }
+
+    template<int Cap> bool Modulus<Cap>::operator >=(const Modulus<Cap> &rhs) const
+    {
+        return val >= rhs.val;
+    }
+
+    template<int Cap> bool Modulus<Cap>::operator >=(const int &rhs) const
+    {
+        return int(*this) >= rhs;
+    }
+
+    template<int Cap> bool operator >=(const int &lhs, const Modulus<Cap> &rhs)
+    {
+        return lhs >= int(rhs);
+    }
+
+    template<int Cap> bool Modulus<Cap>::operator <(const Modulus<Cap> &rhs) const
+    {
+        return val < rhs.val;
+    }
+
+    template<int Cap> bool Modulus<Cap>::operator <(const int &rhs) const
+    {
+        return int(*this) < rhs;
+    }
+
+    template<int Cap> bool operator <(const int &lhs, const Modulus<Cap> &rhs)
+    {
+        return lhs < int(rhs);
+    }
+
+    template<int Cap> bool Modulus<Cap>::operator <=(const Modulus<Cap> &rhs) const
+    {
+        return val <= rhs.val;
+    }
+
+    template<int Cap> bool Modulus<Cap>::operator <=(const int &rhs) const
+    {
+        return int(*this) <= rhs;
+    }
+
+    template<int Cap> bool operator <=(const int &lhs, const Modulus<Cap> &rhs)
+    {
+        return lhs <= int(rhs);
+    }
+
+    template<int Cap> bool Modulus<Cap>::operator ==(const Modulus<Cap> &rhs) const
+    {
+        return val == rhs.val;
+    }
+
+    template<int Cap> bool Modulus<Cap>::operator ==(const int &rhs) const
+    {
+        return int(*this) == rhs;
+    }
+
+    template<int Cap> bool operator ==(const int &lhs, const Modulus<Cap> &rhs)
+    {
+        return lhs == int(rhs);
     }
 
     template<int Cap> std::ostream &operator <<(std::ostream &lhs, const Modulus<Cap> &rhs)
@@ -68,18 +169,18 @@
         return lhs;
     }
 
-    template<int Cap> Modulus<Cap> Modulus<Cap>::operator +()
+    template<int Cap> Modulus<Cap> Modulus<Cap>::operator +() const
     {
         return Modulus<Cap>(*this);
     }
 
-    template<int Cap> Modulus<Cap> Modulus<Cap>::operator +(const int &rhs)
+    template<int Cap> Modulus<Cap> Modulus<Cap>::operator +(const int &rhs) const
     {
         int sum = val + rhs;
         return Modulus<Cap>(sum);
     }
 
-    template<int Cap> Modulus<Cap> Modulus<Cap>::operator +(const Modulus<Cap> &rhs)
+    template<int Cap> Modulus<Cap> Modulus<Cap>::operator +(const Modulus<Cap> &rhs) const
     {
         int sum = val + rhs.val;
         return Modulus<Cap>(sum);
@@ -105,19 +206,19 @@
         return *this;
     }
 
-    template<int Cap> Modulus<Cap> Modulus<Cap>::operator -()
+    template<int Cap> Modulus<Cap> Modulus<Cap>::operator -() const
     {
         return Modulus<Cap>(Cap - val);
     }
 
-    template<int Cap> Modulus<Cap> Modulus<Cap>::operator -(const int &rhs)
+    template<int Cap> Modulus<Cap> Modulus<Cap>::operator -(const int &rhs) const
     {
         int cache = rhs % Cap;
         int sum = val + Cap - cache;
         return Modulus<Cap>(sum);
     }
 
-    template<int Cap> Modulus<Cap> Modulus<Cap>::operator -(const Modulus<Cap> &rhs)
+    template<int Cap> Modulus<Cap> Modulus<Cap>::operator -(const Modulus<Cap> &rhs) const
     {
         int temp = Cap - rhs.val;
         int sum = val + temp;

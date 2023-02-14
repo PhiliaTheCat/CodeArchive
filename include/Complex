@@ -1,7 +1,7 @@
 #ifndef __INCLUDE_COMPLEX__
     #define __INCLUDE_COMPLEX__
 
-    #include <iostream>
+    #include <ostream>
 
     class Complex // Formally, a + bi
     {

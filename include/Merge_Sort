@@ -1,7 +1,8 @@
 #ifndef __INCLUDE_MERGE_SORT__
     #define __INCLUDE_MERGE_SORT__
 
-    #define MAX_DEPTH 64
+    // Iteration Depth Control
+    #define __MAX_DEPTH int(64)
     
     template<class TpSort, class TpFunc> void Merge_Sort(TpSort arr[], int l, int r, bool (*To_Swap)(TpFunc, TpFunc));
 
@@ -15,7 +16,7 @@
                 int r;
                 int status;
         };
-        Stack_Element *stack = new Stack_Element [MAX_DEPTH];
+        Stack_Element *stack = new Stack_Element [__MAX_DEPTH];
         int sp = -1;
 
         // Initialize
