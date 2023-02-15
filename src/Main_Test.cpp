@@ -2,6 +2,7 @@
 #include "../include/Modulus"
 
 using namespace std;
+using namespace ptc;
 
 int main()
 {
