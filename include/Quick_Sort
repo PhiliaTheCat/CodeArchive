@@ -1,49 +1,51 @@
 #ifndef __INCLUDE_QUICK_SORT__
     #define __INCLUDE_QUICK_SORT__
 
+    #include "Iterator_Traits"
+
     // Direct Insertion Requirement
     #define __BOUND int(32)
 
     namespace ptc
     {
-        template<class TpSort, class TpFunc> void Quick_Sort(TpSort arr[], int l, int r, bool (*To_Swap)(TpFunc, TpFunc));
+        template<class RandomIterator, class Cmpfunc> void Quick_Sort(RandomIterator begin, RandomIterator end, Cmpfunc cmp);
 
-        template<class TpSort, class TpFunc> void Quick_Sort(TpSort arr[], int l, int r, bool (*To_Swap)(TpFunc, TpFunc))
+        template<class RandomIterator, class Cmpfunc> void Quick_Sort(RandomIterator begin, RandomIterator end, Cmpfunc cmp)
         {
-            if (l >= r)
+            if (end - begin <= 1)
                 return;
             
             // Direct Insertion Sort if short enough
-            if (r - l + 1 <= __BOUND)
+            if (end - begin <= __BOUND)
             {
-                for (int i = l + 1; i <= r; i += 1)
+                for (RandomIterator i = begin + 1; i < end; i += 1)
                 {
-                    int j = i;
-                    TpSort cache = arr[i];
-                    while (j > l && To_Swap(arr[j - 1], cache))
+                    RandomIterator j = i;
+                    typename Iterator_Traits<RandomIterator>::value_type cache = *i;
+                    while (j > begin && cmp(cache, *(j - 1)))
                     {
-                        arr[j] = arr[j - 1];
+                        *j = *(j - 1);
                         j -= 1;
                     }
-                    arr[j] = cache;
+                    *j = cache;
                 }
                 return;
             }
 
-            int p = l, q = r;
-            int tag = (l + r) / 2;
-            TpSort temp = arr[tag];
+            RandomIterator p = begin, q = end - 1;
+            RandomIterator tag = begin + (end - begin) / 2;
+            typename Iterator_Traits<RandomIterator>::value_type temp = *tag;
             while (1)
             {
-                while (!To_Swap(arr[p], temp) && p < tag)
+                while (!cmp(temp, *p) && p < tag)
                     p += 1;
-                while (!To_Swap(temp, arr[q]) && q > tag)
+                while (!cmp(*q, temp) && q > tag)
                     q -= 1;
                 if (p < q)
                 {
-                    TpSort cache = arr[p];
-                    arr[p] = arr[q];
-                    arr[q] = cache;
+                    typename Iterator_Traits<RandomIterator>::value_type cache = *p;
+                    *p = *q;
+                    *q = cache;
                     if (p == tag)
                         tag = q;
                     else if (q == tag)
@@ -52,8 +54,8 @@
                 else 
                     break;
             }
-            Quick_Sort(arr, l, p - 1, To_Swap);
-            Quick_Sort(arr, p + 1, r, To_Swap);
+            Quick_Sort(begin, p, cmp);
+            Quick_Sort(p + 1, end, cmp);
         }
     }
 #endif
