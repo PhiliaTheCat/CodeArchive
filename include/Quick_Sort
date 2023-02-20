@@ -12,6 +12,8 @@
 
         template<class RandomIterator, class Cmpfunc> void Quick_Sort(RandomIterator begin, RandomIterator end, Cmpfunc cmp)
         {
+            typedef typename Iterator_Traits<RandomIterator>::value_type value_type;
+
             if (end - begin <= 1)
                 return;
             
@@ -21,7 +23,7 @@
                 for (RandomIterator i = begin + 1; i < end; i += 1)
                 {
                     RandomIterator j = i;
-                    typename Iterator_Traits<RandomIterator>::value_type cache = *i;
+                    value_type cache = *i;
                     while (j > begin && cmp(cache, *(j - 1)))
                     {
                         *j = *(j - 1);
@@ -34,7 +36,7 @@
 
             RandomIterator p = begin, q = end - 1;
             RandomIterator tag = begin + (end - begin) / 2;
-            typename Iterator_Traits<RandomIterator>::value_type temp = *tag;
+            value_type temp = *tag;
             while (1)
             {
                 while (!cmp(temp, *p) && p < tag)
@@ -43,7 +45,7 @@
                     q -= 1;
                 if (p < q)
                 {
-                    typename Iterator_Traits<RandomIterator>::value_type cache = *p;
+                    value_type cache = *p;
                     *p = *q;
                     *q = cache;
                     if (p == tag)

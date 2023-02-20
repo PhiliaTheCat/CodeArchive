@@ -9,6 +9,8 @@
 
         template<class RandomIterator, class Cmpfunc> void Bubble_Sort(RandomIterator begin, RandomIterator end, Cmpfunc cmp)
         {
+            typedef typename Iterator_Traits<RandomIterator>::value_type value_type;
+            
             bool flag = true;
             for (RandomIterator j = end; j > begin && flag; j -= 1)
             {
@@ -18,7 +20,7 @@
                     if (cmp(*(i + 1), *i))
                     {
                         flag = true;
-                        typename Iterator_Traits<RandomIterator>::value_type temp = *i;
+                        value_type temp = *i;
                         *i = *(i + 1);
                         *(i + 1) = temp;
                     }

@@ -12,6 +12,8 @@
 
         template<class RandomIterator, class Cmpfunc> void Merge_Sort(RandomIterator begin, RandomIterator end, Cmpfunc cmp)
         {
+            typedef typename Iterator_Traits<RandomIterator>::value_type value_type;
+
             // Initiate Stack
             struct Stack_Element
             {
@@ -63,7 +65,7 @@
                 // Process current node
                 {
                     // Create cache
-                    typename Iterator_Traits<RandomIterator>::value_type *cache = new typename Iterator_Traits<RandomIterator>::value_type [end - begin];
+                    value_type *cache = new value_type [end - begin];
                     RandomIterator i = begin;
                     RandomIterator j = middle;
                     int k = 0;
