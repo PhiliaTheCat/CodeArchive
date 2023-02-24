@@ -12,9 +12,9 @@
         template<int Cap> inline bool operator <(const int &lhs, const Modulus<Cap> &rhs);
         template<int Cap> inline bool operator <=(const int &lhs, const Modulus<Cap> &rhs);
         template<int Cap> inline bool operator ==(const int &lhs, const Modulus<Cap> &rhs);
-        template<int Cap> std::ostream &operator <<(std::ostream &lhs, const Modulus<Cap> &rhs);
-        template<int Cap> Modulus<Cap> operator +(const int &lhs, const Modulus<Cap> &rhs);
-        template<int Cap> Modulus<Cap> operator -(const int &lhs, const Modulus<Cap> &rhs);
+        template<int Cap> inline std::ostream &operator <<(std::ostream &lhs, const Modulus<Cap> &rhs);
+        template<int Cap> inline Modulus<Cap> operator +(const int &lhs, const Modulus<Cap> &rhs);
+        template<int Cap> inline Modulus<Cap> operator -(const int &lhs, const Modulus<Cap> &rhs);
 
         template<int Cap> class Modulus
         {
@@ -32,41 +32,41 @@
 
                 inline bool operator >(const Modulus &rhs) const;
                 inline bool operator >(const int &rhs) const;
-                friend bool ptc::operator ><Cap>(const int &lhs, const Modulus &rhs);
+                friend bool ptc::operator ><Cap>(const int &lhs, const Modulus<Cap> &rhs);
 
                 inline bool operator >=(const Modulus &rhs) const;
                 inline bool operator >=(const int &rhs) const;
-                friend bool ptc::operator >=<Cap>(const int &lhs, const Modulus &rhs);
+                friend bool ptc::operator >=<Cap>(const int &lhs, const Modulus<Cap> &rhs);
 
                 inline bool operator <(const Modulus &rhs) const;
                 inline bool operator <(const int &rhs) const;
-                friend bool ptc::operator < <Cap>(const int &lhs, const Modulus &rhs);
+                friend bool ptc::operator < <Cap>(const int &lhs, const Modulus<Cap> &rhs);
 
                 inline bool operator <=(const Modulus &rhs) const;
                 inline bool operator <=(const int &rhs) const;
-                friend bool ptc::operator <=<Cap>(const int &lhs, const Modulus &rhs);
+                friend bool ptc::operator <=<Cap>(const int &lhs, const Modulus<Cap> &rhs);
 
                 inline bool operator ==(const Modulus &rhs) const;
                 inline bool operator ==(const int &rhs) const;
-                friend bool ptc::operator ==<Cap>(const int &lhs, const Modulus &rhs);
+                friend bool ptc::operator ==<Cap>(const int &lhs, const Modulus<Cap> &rhs);
 
-                friend std::ostream &ptc::operator << <Cap>(std::ostream &lhs, const Modulus &rhs);
+                friend std::ostream &ptc::operator << <Cap>(std::ostream &lhs, const Modulus<Cap> &rhs);
 
-                Modulus operator +() const;
-                Modulus operator +(const int &rhs) const;
-                Modulus operator +(const Modulus &rhs) const;
-                friend Modulus ptc::operator +<Cap>(const int &lhs, const Modulus &rhs);
+                inline Modulus operator +() const;
+                inline Modulus operator +(const int &rhs) const;
+                inline Modulus operator +(const Modulus &rhs) const;
+                friend Modulus ptc::operator +<Cap>(const int &lhs, const Modulus<Cap> &rhs);
 
-                Modulus &operator +=(const int &rhs);
-                Modulus &operator +=(const Modulus &rhs);
+                inline Modulus &operator +=(const int &rhs);
+                inline Modulus &operator +=(const Modulus &rhs);
 
-                Modulus operator -() const;
-                Modulus operator -(const int &rhs) const;
-                Modulus operator -(const Modulus &rhs) const;
-                friend Modulus ptc::operator -<Cap>(const int &lhs, const Modulus &rhs);
+                inline Modulus operator -() const;
+                inline Modulus operator -(const int &rhs) const;
+                inline Modulus operator -(const Modulus &rhs) const;
+                friend Modulus ptc::operator -<Cap>(const int &lhs, const Modulus<Cap> &rhs);
 
-                Modulus &operator -=(const int &rhs);
-                Modulus &operator -=(const Modulus &rhs);
+                inline Modulus &operator -=(const int &rhs);
+                inline Modulus &operator -=(const Modulus &rhs);
 
         };
 
@@ -74,14 +74,14 @@
         : val(tar % Cap)
         {}
 
-        template<int Cap> Modulus<Cap>::Modulus(const Modulus<Cap> &tar)
+        template<int Cap> Modulus<Cap>::Modulus(const Modulus &tar)
         : val(tar.val)
         {}
 
         template<int Cap> Modulus<Cap>::~Modulus()
         {}
 
-        template<int Cap> Modulus<Cap> &Modulus<Cap>::operator =(const Modulus<Cap> &rhs)
+        template<int Cap> Modulus<Cap> &Modulus<Cap>::operator =(const Modulus &rhs)
         {
             val = rhs.val;
             return *this;
