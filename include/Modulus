@@ -1,5 +1,5 @@
-#ifndef __INCLUDE_MODULUS__
-    #define __INCLUDE_MODULUS__
+#ifndef __INCLUDED_MODULUS__
+    #define __INCLUDED_MODULUS__
 
     #include <ostream>
 

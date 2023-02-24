@@ -1,5 +1,5 @@
-#ifndef __INCLUDE_MERGE_SORT__
-    #define __INCLUDE_MERGE_SORT__
+#ifndef __INCLUDED_MERGE_SORT__
+    #define __INCLUDED_MERGE_SORT__
 
     #include "Iterator_Traits"
 
