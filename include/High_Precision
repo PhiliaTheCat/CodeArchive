@@ -6,6 +6,7 @@
     #include <iomanip>
 
     #define __ARR_SIZE int(32)
+    #define __BUFF_SIZE int(1000)
 
     namespace ptc
     {
@@ -37,6 +38,8 @@
                 High_Precision operator +(const High_Precision &rhs) const;
                 High_Precision operator +(const int &rhs) const;
                 friend High_Precision<Unit> ptc::operator +<Unit>(const int &lhs, const High_Precision<Unit> &rhs);
+
+                High_Precision operator *(const High_Precision &rhs) const;
         };
 
         template<int Unit> High_Precision<Unit>::High_Precision(const int &src)
@@ -81,7 +84,7 @@
         template<int Unit> std::istream &operator >>(std::istream &lhs, High_Precision<Unit> &rhs)
         {
             int cache = 0;
-            char buffer[1001];
+            char buffer[__BUFF_SIZE + 1];
             lhs >> buffer;
             int i = 0, j = 0, k = 0;
             int diff = -1;
@@ -129,11 +132,18 @@
                     break;
             }
             rhs.n = k;
+            if (rhs.n == 1 && rhs.arr[0] == 0)
+                rhs.n = 0;
             return lhs;
         }
 
         template<int Unit> std::ostream &operator <<(std::ostream &lhs, const High_Precision<Unit> &rhs)
         {
+            if (rhs.n == 0)
+            {
+                lhs << 0;
+                return lhs;
+            }
             int cap = Unit - 1;
             int n = 0;
             while (cap > 0)
@@ -160,7 +170,7 @@
 
         template<int Unit> High_Precision<Unit> High_Precision<Unit>::operator +(const High_Precision<Unit> &rhs) const
         {
-            High_Precision<Unit> res;
+            High_Precision res;
             for (int i = 0; i < __ARR_SIZE; i += 1)
             {
                 res.arr[i] += arr[i] + rhs.arr[i];
@@ -181,7 +191,7 @@
 
         template<int Unit> High_Precision<Unit> High_Precision<Unit>::operator +(const int &rhs) const 
         {
-            High_Precision<Unit> temp = rhs;
+            High_Precision temp = rhs;
             temp = temp + *this;
             return temp;
         }
@@ -190,6 +200,28 @@
         {
             High_Precision<Unit> temp = lhs;
             temp = temp + rhs;
+            return temp;
+        }
+
+        template<int Unit> High_Precision<Unit> High_Precision<Unit>::operator *(const High_Precision &rhs) const
+        {
+            High_Precision temp;
+            for (int i = 0; i < rhs.n; i += 1)
+            {
+                for (int j = 0; j < n; j += 1)
+                {
+                    temp.arr[i + j] += rhs.arr[i] * arr[j];
+                    if (i + j >= temp.n)
+                        temp.n = i + j + 1;
+                    if (temp.arr[i + j] >= Unit)
+                    {
+                        temp.arr[i + j + 1] += temp.arr[i + j] / Unit;
+                        if (i + j + 1 >= temp.n)
+                            temp.n = i + j + 2;
+                        temp.arr[i + j] %= Unit;
+                    }
+                }
+            }
             return temp;
         }
     }
