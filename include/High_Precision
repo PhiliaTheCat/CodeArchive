@@ -10,7 +10,7 @@
 
     namespace ptc
     {
-        template<int Unit> class High_Precision;
+        template<int Unit = int(1e4)> class High_Precision;
 
         template<int Unit> std::istream &operator >>(std::istream &lhs, High_Precision<Unit> &rhs);
         template<int Unit> std::ostream &operator <<(std::ostream &lhs, const High_Precision<Unit> &rhs);
@@ -206,22 +206,23 @@
         template<int Unit> High_Precision<Unit> High_Precision<Unit>::operator *(const High_Precision &rhs) const
         {
             High_Precision temp;
+            if (n == 0 || rhs.n == 0)
+                return temp;
             for (int i = 0; i < rhs.n; i += 1)
             {
                 for (int j = 0; j < n; j += 1)
                 {
                     temp.arr[i + j] += rhs.arr[i] * arr[j];
-                    if (i + j >= temp.n)
-                        temp.n = i + j + 1;
                     if (temp.arr[i + j] >= Unit)
                     {
                         temp.arr[i + j + 1] += temp.arr[i + j] / Unit;
-                        if (i + j + 1 >= temp.n)
-                            temp.n = i + j + 2;
                         temp.arr[i + j] %= Unit;
                     }
                 }
             }
+            temp.n = rhs.n + n;
+            while (temp.arr[temp.n - 1] == 0)
+                temp.n -= 1;
             return temp;
         }
     }
