@@ -1,105 +1,112 @@
 #ifndef __INCLUDE_MERGE_SORT__
     #define __INCLUDE_MERGE_SORT__
 
-    #define MAX_DEPTH 64
+    #include "Iterator_Traits"
+
+    // Iteration Depth Control
+    #define __MAX_DEPTH int(64)
     
-    template<class TpSort, class TpFunc> void Merge_Sort(TpSort arr[], int l, int r, bool (*To_Swap)(TpFunc, TpFunc));
-
-    template<class TpSort, class TpFunc> void Merge_Sort(TpSort arr[], int l, int r, bool (*To_Swap)(TpFunc, TpFunc))
+    namespace ptc
     {
-        // Initiate Stack
-        class Stack_Element
-        {
-            public:
-                int l;
-                int r;
-                int status;
-        };
-        Stack_Element *stack = new Stack_Element [MAX_DEPTH];
-        int sp = -1;
+        template<class RandomIterator, class Cmpfunc> void Merge_Sort(RandomIterator begin, RandomIterator end, Cmpfunc cmp);
 
-        // Initialize
-        sp += 1;
-        stack[sp].l = l;
-        stack[sp].r = r;
-        stack[sp].status = 0;
-
-        // Process
-        while (sp > -1)
+        template<class RandomIterator, class Cmpfunc> void Merge_Sort(RandomIterator begin, RandomIterator end, Cmpfunc cmp)
         {
-            if (stack[sp].l == stack[sp].r)
-            // Return if l == r
+            typedef typename Iterator_Traits<RandomIterator>::value_type value_type;
+
+            // Initiate Stack
+            struct Stack_Element
             {
-                sp -= 1;
-                continue;
-            }
-            l = stack[sp].l;
-            r = stack[sp].r;
-            int m = (l + r) / 2;
-            int &status = stack[sp].status;
-            if (status == 0)
-            // Process left node
+                public:
+                    RandomIterator begin;
+                    RandomIterator end;
+                    int status;
+            };
+            Stack_Element *stack = new Stack_Element [__MAX_DEPTH];
+            int sp = -1;
+
+            // Initialize
+            sp += 1;
+            stack[sp].begin = begin;
+            stack[sp].end = end;
+            stack[sp].status = 0;
+
+            // Process
+            while (sp > -1)
             {
-                status += 1;
-                sp += 1;
-                stack[sp].l = l;
-                stack[sp].r = m;
-                stack[sp].status = 0;
-            }
-            else if (status == 1)
-            // Process right node
-            {
-                status += 1;
-                sp += 1;
-                stack[sp].l = m + 1;
-                stack[sp].r = r;
-                stack[sp].status = 0;
-            }
-            else 
-            // Process current node
-            {
-                // Create cache
-                TpSort *cache = new TpSort [r - l + 1];
-                int i = l;
-                int j = m + 1;
-                int k = 0;
-                // Fill in
-                while (i <= m && j <= r)
+                if (stack[sp].end - stack[sp].begin <= 1)
                 {
-                    if (To_Swap(arr[i], arr[j]))
+                    sp -= 1;
+                    continue;
+                }
+                begin = stack[sp].begin;
+                end = stack[sp].end;
+                RandomIterator middle = begin + (end - begin) / 2;
+                int &status = stack[sp].status;
+                if (status == 0)
+                // Process left node
+                {
+                    status += 1;
+                    sp += 1;
+                    stack[sp].begin = begin;
+                    stack[sp].end = middle;
+                    stack[sp].status = 0;
+                }
+                else if (status == 1)
+                // Process right node
+                {
+                    status += 1;
+                    sp += 1;
+                    stack[sp].begin = middle;
+                    stack[sp].end = end;
+                    stack[sp].status = 0;
+                }
+                else 
+                // Process current node
+                {
+                    // Create cache
+                    value_type *cache = new value_type [end - begin];
+                    RandomIterator i = begin;
+                    RandomIterator j = middle;
+                    int k = 0;
+                    // Fill in
+                    while (i < middle && j < end)
                     {
-                        cache[k] = arr[j];
-                        j += 1;
-                        k += 1;
+                        if (cmp(*j, *i))
+                        {
+                            cache[k] = *j;
+                            j += 1;
+                            k += 1;
+                        }
+                        else 
+                        {
+                            cache[k] = *i;
+                            i += 1;
+                            k += 1;
+                        }
                     }
-                    else 
+                    // Fill in remained
+                    while (i < middle)
                     {
-                        cache[k] = arr[i];
+                        cache[k] = *i;
                         i += 1;
                         k += 1;
                     }
+                    while (j < end)
+                    {
+                        cache[k] = *j;
+                        j += 1;
+                        k += 1;
+                    }
+                    // Write back
+                    for (i = begin, k = 0; i < end; i += 1, k += 1)
+                        *i = cache[k];
+                    delete [] cache;
+                    // Return
+                    sp -= 1;
                 }
-                // Fill in remained
-                while (i <= m)
-                {
-                    cache[k] = arr[i];
-                    i += 1;
-                    k += 1;
-                }
-                while (j <= r)
-                {
-                    cache[k] = arr[j];
-                    j += 1;
-                    k += 1;
-                }
-                // Write back
-                for (i = l, k = 0; i <= r; i += 1, k += 1)
-                    arr[i] = cache[k];
-                delete [] cache;
-                // Return
-                sp -= 1;
             }
+            delete [] stack;
         }
-        delete [] stack;
     }
 #endif

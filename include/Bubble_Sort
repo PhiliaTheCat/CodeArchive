@@ -1,22 +1,29 @@
 #ifndef __INCLUDE_BUBBLE_SORT__
     #define __INCLUDE_BUBBLE_SORT__
 
-    template<class TpSort, class TpFunc> void Bubble_Sort(TpSort arr[], int l, int r, bool (*To_Swap)(TpFunc, TpFunc));
+    #include "Iterator_Traits"
 
-    template<class TpSort, class TpFunc> void Bubble_Sort(TpSort arr[], int l, int r, bool (*To_Swap)(TpFunc, TpFunc))
+    namespace ptc
     {
-        bool flag = true;
-        for (int j = r; j >= l + 1 && flag; j -= 1)
+        template<class RandomIterator, class Cmpfunc> void Bubble_Sort(RandomIterator begin, RandomIterator end, Cmpfunc cmp);
+
+        template<class RandomIterator, class Cmpfunc> void Bubble_Sort(RandomIterator begin, RandomIterator end, Cmpfunc cmp)
         {
-            flag = false;
-            for (int i = 0; i <= j - 1; i += 1)
+            typedef typename Iterator_Traits<RandomIterator>::value_type value_type;
+            
+            bool flag = true;
+            for (RandomIterator j = end; j > begin && flag; j -= 1)
             {
-                if (To_Swap(arr[i], arr[i + 1]))
+                flag = false;
+                for (RandomIterator i = begin; i < j - 1; i += 1)
                 {
-                    flag = true;
-                    TpSort temp = arr[i];
-                    arr[i] = arr[i + 1];
-                    arr[i + 1] = temp;
+                    if (cmp(*(i + 1), *i))
+                    {
+                        flag = true;
+                        value_type temp = *i;
+                        *i = *(i + 1);
+                        *(i + 1) = temp;
+                    }
                 }
             }
         }
