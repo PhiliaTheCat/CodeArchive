@@ -1,5 +1,5 @@
-#ifndef __INCLUDE_COMPLEX__
-    #define __INCLUDE_COMPLEX__
+#ifndef __INCLUDED_COMPLEX__
+    #define __INCLUDED_COMPLEX__
 
     #include <ostream>
 

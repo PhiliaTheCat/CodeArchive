@@ -1,5 +1,5 @@
-#ifndef __INCLUDE_BUBBLE_SORT__
-    #define __INCLUDE_BUBBLE_SORT__
+#ifndef __INCLUDED_BUBBLE_SORT__
+    #define __INCLUDED_BUBBLE_SORT__
 
     #include "Iterator_Traits"
 
