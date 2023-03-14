@@ -22,6 +22,7 @@
         {
             private:
                 int val;
+                
             public:
                 Modulus(const int &tar = 0);
                 Modulus(const Modulus &tar);
