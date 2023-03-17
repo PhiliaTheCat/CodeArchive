@@ -17,6 +17,7 @@
         template<int Cap> inline std::ostream &operator <<(std::ostream &lhs, const Modulus<Cap> &rhs);
         template<int Cap> inline Modulus<Cap> operator +(const int &lhs, const Modulus<Cap> &rhs);
         template<int Cap> inline Modulus<Cap> operator -(const int &lhs, const Modulus<Cap> &rhs);
+        template<int Cap> inline Modulus<Cap> operator *(const int &lhs, const Modulus<Cap> &rhs);
 
         template<int Cap> class Modulus
         {
@@ -72,6 +73,12 @@
                 inline Modulus &operator -=(const int &rhs);
                 inline Modulus &operator -=(const Modulus &rhs);
 
+                inline Modulus operator *(const int &rhs) const;
+                inline Modulus operator *(const Modulus &rhs) const;
+                friend Modulus ptc::operator *<Cap>(const int &lhs, const Modulus<Cap> &rhs);
+
+                inline Modulus &operator *=(const int &rhs);
+                inline Modulus &operator *=(const Modulus &rhs);
         };
 
         template<int Cap> Modulus<Cap>::Modulus(const int &tar)
@@ -261,6 +268,38 @@
             int temp = Cap - rhs.val;
             int sum = val + temp;
             val = sum % Cap;
+            return *this;
+        }
+
+        template<int Cap> Modulus<Cap> Modulus<Cap>::operator *(const int &rhs) const
+        {
+            int temp = val * rhs;
+            return Modulus<Cap>(temp);
+        }
+
+        template<int Cap> Modulus<Cap> Modulus<Cap>::operator *(const Modulus<Cap> &rhs) const
+        {
+            int temp = val * rhs.val;
+            return Modulus<Cap>(temp);
+        }
+
+        template<int Cap> Modulus<Cap> operator *(const int &lhs, const Modulus<Cap> &rhs)
+        {
+            int temp = lhs * rhs.val;
+            return Modulus<Cap>(temp);
+        }
+
+        template<int Cap> Modulus<Cap> &Modulus<Cap>::operator *=(const int &rhs)
+        {
+            int temp = val * rhs;
+            val = temp % Cap;
+            return *this;
+        }
+
+        template<int Cap> Modulus<Cap> &Modulus<Cap>::operator *=(const Modulus<Cap> &rhs)
+        {
+            int temp = val * rhs.val;
+            val = temp % Cap;
             return *this;
         }
     }
