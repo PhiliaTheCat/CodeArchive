@@ -30,6 +30,14 @@
 
                 High_Precision &operator =(const High_Precision &rhs);
 
+                bool operator <(const High_Precision &rhs) const;
+
+                bool operator <=(const High_Precision &rhs) const;
+
+                bool operator >(const High_Precision &rhs) const;
+
+                bool operator >=(const High_Precision &rhs) const;
+
                 friend std::istream &ptc::operator >><Unit>(std::istream &lhs, High_Precision<Unit> &rhs);
 
                 friend std::ostream &ptc::operator << <Unit>(std::ostream &lhs, const High_Precision<Unit> &rhs);
@@ -79,6 +87,82 @@
             for (int i = n; i < __ARR_SIZE; i += 1)
                 arr[i] = 0;
             return *this;
+        }
+
+        template<int Unit> bool High_Precision<Unit>::operator <(const High_Precision &rhs) const
+        {
+            if (n < rhs.n)
+                return true;
+            else if (n > rhs.n)
+                return false;
+            else 
+            {
+                for (int i = n - 1; i > -1; i -= 1)
+                {
+                    if (arr[i] < rhs.arr[i])
+                        return true;
+                    else if (arr[i] > rhs.arr[i])
+                        return false;
+                }
+                return false;
+            }
+        }
+
+        template<int Unit> bool High_Precision<Unit>::operator <=(const High_Precision &rhs) const
+        {
+            if (n < rhs.n)
+                return true;
+            else if (n > rhs.n)
+                return false;
+            else 
+            {
+                for (int i = n - 1; i > -1; i -= 1)
+                {
+                    if (arr[i] < rhs.arr[i])
+                        return true;
+                    else if (arr[i] > rhs.arr[i])
+                        return false;
+                }
+                return true;
+            }
+        }
+
+        template<int Unit> bool High_Precision<Unit>::operator >(const High_Precision &rhs) const
+        {
+            if (n > rhs.n)
+                return true;
+            else if (n < rhs.n)
+                return false;
+            else 
+            {
+                for (int i = n - 1; i > -1; i -= 1)
+                {
+                    if (arr[i] > rhs.arr[i])
+                        return true;
+                    else if (arr[i] < rhs.arr[i])
+                        return false;
+                }
+                return false;
+            }
+        }
+
+        template<int Unit> bool High_Precision<Unit>::operator >=(const High_Precision &rhs) const
+        {
+            if (n > rhs.n)
+                return true;
+            else if (n < rhs.n)
+                return false;
+            else 
+            {
+                for (int i = n - 1; i > -1; i -= 1)
+                {
+                    if (arr[i] > rhs.arr[i])
+                        return true;
+                    else if (arr[i] < rhs.arr[i])
+                        return false;
+                }
+                return true;
+            }
         }
 
         template<int Unit> std::istream &operator >>(std::istream &lhs, High_Precision<Unit> &rhs)
