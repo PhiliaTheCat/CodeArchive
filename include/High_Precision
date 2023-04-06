@@ -15,12 +15,13 @@
         template<int Unit> std::istream &operator >>(std::istream &lhs, High_Precision<Unit> &rhs);
         template<int Unit> std::ostream &operator <<(std::ostream &lhs, const High_Precision<Unit> &rhs);
         template<int Unit> High_Precision<Unit> operator +(const int &lhs, const High_Precision<Unit> &rhs);
+        template<int Unit> High_Precision<Unit> operator *(const int &lhs, const High_Precision<Unit> &rhs);
 
         template<int Unit> class High_Precision
         {
             private:
-                int arr[__ARR_SIZE];
                 int n;
+                int arr[__ARR_SIZE];
 
             public:
                 High_Precision(const int &src = 0);
@@ -47,7 +48,15 @@
                 High_Precision operator +(const int &rhs) const;
                 friend High_Precision<Unit> ptc::operator +<Unit>(const int &lhs, const High_Precision<Unit> &rhs);
 
+                High_Precision &operator +=(const High_Precision &rhs);
+                High_Precision &operator +=(const int &rhs);
+
                 High_Precision operator *(const High_Precision &rhs) const;
+                High_Precision operator *(const int &rhs) const;
+                friend High_Precision<Unit> ptc::operator *<Unit>(const int &lhs, const High_Precision<Unit> &rhs);
+
+                High_Precision &operator *=(const High_Precision &rhs);
+                High_Precision &operator *=(const int &rhs);
         };
 
         template<int Unit> High_Precision<Unit>::High_Precision(const int &src)
@@ -252,7 +261,7 @@
             return High_Precision(*this);
         }
 
-        template<int Unit> High_Precision<Unit> High_Precision<Unit>::operator +(const High_Precision<Unit> &rhs) const
+        template<int Unit> High_Precision<Unit> High_Precision<Unit>::operator +(const High_Precision &rhs) const
         {
             High_Precision res;
             for (int i = 0; i < __ARR_SIZE; i += 1)
@@ -287,6 +296,18 @@
             return temp;
         }
 
+        template<int Unit> High_Precision<Unit> &High_Precision<Unit>::operator +=(const High_Precision &rhs)
+        {
+            *this = *this + rhs;
+            return *this;
+        }
+
+        template<int Unit> High_Precision<Unit> &High_Precision<Unit>::operator +=(const int &rhs)
+        {
+            *this = *this + rhs;
+            return *this;
+        }
+
         template<int Unit> High_Precision<Unit> High_Precision<Unit>::operator *(const High_Precision &rhs) const
         {
             High_Precision temp;
@@ -308,6 +329,32 @@
             while (temp.arr[temp.n - 1] == 0)
                 temp.n -= 1;
             return temp;
+        }
+    
+        template<int Unit> High_Precision<Unit> High_Precision<Unit>::operator *(const int &rhs) const
+        {
+            High_Precision temp = rhs;
+            temp = temp * *this;
+            return temp;
+        }
+
+        template<int Unit> High_Precision<Unit> operator *(const int &lhs, const High_Precision<Unit> &rhs)
+        {
+            High_Precision<Unit> temp = lhs;
+            temp = temp * rhs;
+            return temp;
+        }
+
+        template<int Unit> High_Precision<Unit> &High_Precision<Unit>::operator *=(const High_Precision &rhs)
+        {
+            *this = *this * rhs;
+            return *this;
+        }
+
+        template<int Unit> High_Precision<Unit> &High_Precision<Unit>::operator *=(const int &rhs)
+        {
+            *this = *this * rhs;
+            return *this;
         }
     }
 #endif
