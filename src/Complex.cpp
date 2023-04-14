@@ -20,8 +20,18 @@ namespace ptc
     {
         double x = pow(__a, 2);
         double y = pow(__b, 2);
-        double res = pow(x + y, .5);
+        double res = sqrt(x + y);
         return res;
+    }
+
+    double &Complex::re()
+    {
+        return __a;
+    }
+
+    double &Complex::im()
+    {
+        return __b;
     }
 
     Complex &Complex::operator =(const Complex &tar)

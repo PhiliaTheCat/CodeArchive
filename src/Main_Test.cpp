@@ -1,18 +1,15 @@
 #include <iostream>
 
-#include "../include/High_Precision"
+#include "../include/Complex"
 
 using namespace std;
 using namespace ptc;
 
-template<int Cap> bool cmp(const Modulus<Cap> &l, const Modulus<Cap> &r);
-
 int main()
 {
-    High_Precision a, b;
-    cin >> a >> b;
-    cout << (a < b) << endl;
-    cout << (a <= b) << endl;
-    cout << (a > b) << endl;
-    cout << (a >= b) << endl;
+    Complex x = Complex(-3, 1.4);
+    double a = x.re();
+    a = 13;
+    cout << a << endl;
+    cout << x.re() << endl;
 }

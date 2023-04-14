@@ -18,7 +18,11 @@
 
                 ~Complex();
 
-                double modulus(); // Module of a complex
+                double modulus(); // Modulus of a complex
+
+                // Real/Imaginary part of a complex
+                double &re();
+                double &im();
 
                 // Operators
                 Complex &operator =(const Complex &tar);
