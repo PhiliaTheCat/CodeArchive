@@ -5,6 +5,8 @@
 
     // Direct Insertion Requirement
     #define __BOUND int(32)
+    // Iterating Depth Control
+    #define __MAX_DEPTH int(32768)
 
     namespace ptc
     {
@@ -14,50 +16,84 @@
         {
             typedef typename Iterator_Traits<RandomIterator>::value_type value_type;
 
-            if (end - begin <= 1)
-                return;
-            
-            // Direct Insertion Sort if short enough
-            if (end - begin <= __BOUND)
+            // Initiate Stack
+            struct Stack_Element
             {
-                for (RandomIterator i = begin + 1; i < end; i += 1)
-                {
-                    RandomIterator j = i;
-                    value_type cache = *i;
-                    while (j > begin && cmp(cache, *(j - 1)))
-                    {
-                        *j = *(j - 1);
-                        j -= 1;
-                    }
-                    *j = cache;
-                }
-                return;
-            }
+                public:
+                    RandomIterator begin;
+                    RandomIterator end;
+                    RandomIterator mid;
+                    int status;
+            };
+            Stack_Element *stack = new Stack_Element [__MAX_DEPTH];
+            int sp = -1;
 
-            RandomIterator p = begin, q = end - 1;
-            RandomIterator tag = begin + (end - begin) / 2;
-            value_type temp = *tag;
-            while (1)
+            sp += 1;
+            stack[sp].begin = begin;
+            stack[sp].end = end;
+            stack[sp].status = 0;
+
+            while (sp > -1)
             {
-                while (!cmp(temp, *p) && p < tag)
-                    p += 1;
-                while (!cmp(*q, temp) && q > tag)
-                    q -= 1;
-                if (p < q)
-                {
-                    value_type cache = *p;
-                    *p = *q;
-                    *q = cache;
-                    if (p == tag)
-                        tag = q;
-                    else if (q == tag)
-                        tag = p;
+                if (stack[sp].status == 0)
+                {   
+                    RandomIterator l = stack[sp].begin;
+                    RandomIterator r = stack[sp].end;
+                    // Direct Insertion
+                    if (r - l <= __BOUND)
+                    {
+                        for (RandomIterator i = l + 1; i < r; i += 1)
+                        {
+                            value_type t = *i;
+                            RandomIterator j = i - 1;
+                            while (j >= l && cmp(t, *j))
+                            {
+                                *(j + 1) = *j;
+                                j -= 1;
+                            }
+                            *(j + 1) = t;
+                        }
+                        sp -= 1;
+                    }
+                    else
+                    {
+                        RandomIterator i = l;
+                        RandomIterator j = r;
+                        RandomIterator m = i + (j - i) / 2;
+                        value_type t = *m;
+                        while (j - i > 1)
+                        {
+                            while (!cmp(t, *i) && i < m)
+                                i += 1;
+                            while (!cmp(*(j - 1), t) && j - 1 > m)
+                                j -= 1;
+                            if (j - i > 1)
+                            {
+                                value_type cache = *i;
+                                *i = *(j - 1);
+                                *(j - 1) = cache;
+                                if (i == m)
+                                    m = j - 1;
+                                else if (j - 1 == m)
+                                    m = i;
+                            }
+                        }
+                        stack[sp].mid = m;
+                        stack[sp].status = 1;
+                        sp += 1;
+                        stack[sp].begin = l;
+                        stack[sp].end = m;
+                        stack[sp].status = 0;
+                    }
                 }
-                else 
-                    break;
+                else if (stack[sp].status == 1)
+                {
+                    stack[sp].begin = stack[sp].mid + 1;
+                    stack[sp].status = 0;
+                }
             }
-            Quick_Sort(begin, p, cmp);
-            Quick_Sort(p + 1, end, cmp);
+            delete [] stack;
+            return;
         }
     }
 #endif

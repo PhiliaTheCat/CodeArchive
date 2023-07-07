@@ -197,8 +197,8 @@ namespace ptc
     Complex operator /(const double &fst, const Complex &sec)
     {
         double root = sec.__a * sec.__a + sec.__b * sec.__b;
-        double a = fst * sec.__a;
-        double b = -fst * sec.__b;
+        double a = (fst * sec.__a) / root;
+        double b = (-fst * sec.__b) / root;
         Complex res(a, b);
         return res;
     }
@@ -222,14 +222,7 @@ namespace ptc
 
     std::ostream &operator <<(std::ostream &tar, const Complex &sample)
     {
-        if (sample.__b > 1e-12)
-            tar << sample.__a << " + " << sample.__b << 'i';
-        else if (sample.__b < -1e-12)
-            tar << sample.__a << " - " << -sample.__b << 'i';
-        else if (sample.__a > 1e-12 || sample.__a < -1e-12)
-            tar << sample.__a;
-        else 
-            tar << 0;
+        tar << sample.__a << " + " << sample.__b << 'i';
         return tar;
     }
 }
