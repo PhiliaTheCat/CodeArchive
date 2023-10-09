@@ -17,10 +17,9 @@
             // Initiate Stack
             struct Stack_Element
             {
-                public:
-                    RandomIterator begin;
-                    RandomIterator end;
-                    int status;
+                RandomIterator begin;
+                RandomIterator end;
+                int status;
             };
             Stack_Element *stack = new Stack_Element [__MAX_DEPTH];
             int sp = -1;

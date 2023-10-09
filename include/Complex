@@ -8,58 +8,58 @@
         class Complex // Formally, a + bi
         {
             private:
-                double __a;
-                double __b;
+            double __a;
+            double __b;
 
             public:
-                // Constructors
-                Complex(const double &a = 0, const double &b = 0);
-                Complex(const Complex &tar);
+            // Constructors
+            Complex(const double &a = 0, const double &b = 0);
+            Complex(const Complex &tar);
 
-                ~Complex();
+            ~Complex();
 
-                double modulus(); // Modulus of a complex
+            double modulus(); // Modulus of a complex
 
-                // Real/Imaginary part of a complex
-                double &re();
-                double &im();
+            // Real/Imaginary part of a complex
+            double &re();
+            double &im();
 
-                // Operators
-                Complex &operator =(const Complex &tar);
-                
-                bool operator ==(const Complex &sec);
+            // Operators
+            Complex &operator =(const Complex &tar);
+            
+            bool operator ==(const Complex &sec);
 
-                Complex operator +();
-                Complex operator +(const Complex &sec);
-                Complex operator +(const double &sec);
-                friend Complex operator +(const double &fst, const Complex &sec);
+            Complex operator +();
+            Complex operator +(const Complex &sec);
+            Complex operator +(const double &sec);
+            friend Complex operator +(const double &fst, const Complex &sec);
 
-                Complex &operator +=(const Complex &sec);
-                Complex &operator +=(const double &sec);
+            Complex &operator +=(const Complex &sec);
+            Complex &operator +=(const double &sec);
 
-                Complex operator -();
-                Complex operator -(const Complex &sec);
-                Complex operator -(const double &sec);
-                friend Complex operator -(const double &fst, const Complex &sec);
+            Complex operator -();
+            Complex operator -(const Complex &sec);
+            Complex operator -(const double &sec);
+            friend Complex operator -(const double &fst, const Complex &sec);
 
-                Complex &operator -=(const Complex &sec);
-                Complex &operator -=(const double &sec);
+            Complex &operator -=(const Complex &sec);
+            Complex &operator -=(const double &sec);
 
-                Complex operator *(const Complex &sec);
-                Complex operator *(const double &sec);
-                friend Complex operator *(const double &fst, const Complex &sec);
+            Complex operator *(const Complex &sec);
+            Complex operator *(const double &sec);
+            friend Complex operator *(const double &fst, const Complex &sec);
 
-                Complex &operator *=(const Complex &sec);
-                Complex &operator *=(const double &sec);
+            Complex &operator *=(const Complex &sec);
+            Complex &operator *=(const double &sec);
 
-                Complex operator /(const Complex &sec);
-                Complex operator /(const double &sec);
-                friend Complex operator /(const double &fst, const Complex &sec);
+            Complex operator /(const Complex &sec);
+            Complex operator /(const double &sec);
+            friend Complex operator /(const double &fst, const Complex &sec);
 
-                Complex &operator /=(const Complex &sec);
-                Complex &operator /=(const double &sec);
+            Complex &operator /=(const Complex &sec);
+            Complex &operator /=(const double &sec);
 
-                friend std::ostream &operator <<(std::ostream &tar, const Complex &sample);
+            friend std::ostream &operator <<(std::ostream &tar, const Complex &sample);
         };
     }
 #endif

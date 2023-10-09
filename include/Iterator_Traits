@@ -6,13 +6,13 @@
         template<class Iterator> class Iterator_Traits
         {
             public:
-                typedef typename Iterator::value_type value_type;
+            typedef typename Iterator::value_type value_type;
         };
 
         template<class Tp> class Iterator_Traits<Tp *>
         {
             public:
-                typedef Tp value_type;
+            typedef Tp value_type;
         };
     }
 #endif
