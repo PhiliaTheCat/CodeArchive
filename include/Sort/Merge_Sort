@@ -1,7 +1,7 @@
 #ifndef __INCLUDED_MERGE_SORT__
     #define __INCLUDED_MERGE_SORT__
 
-    #include "Iterator_Traits"
+    #include "../Traits/Iterator_Traits"
 
     // Iteration Depth Control
     #define __MAX_DEPTH int(64)
