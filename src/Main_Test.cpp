@@ -1,6 +1,6 @@
 #include <iostream>
 
-#include "../include/Quick_Sort"
+#include "../include/Sort/Quick_Sort"
 
 using namespace std;
 using namespace ptc;
