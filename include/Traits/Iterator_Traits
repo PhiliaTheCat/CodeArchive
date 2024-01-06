@@ -1,18 +1,18 @@
 #ifndef __INCLUDED_ITERATOR_TRAITS__
-    #define __INCLUDED_ITERATOR_TRAITS__
+#define __INCLUDED_ITERATOR_TRAITS__
 
-    namespace ptc
+namespace ptc
+{
+    template<class Iterator> class Iterator_Traits
     {
-        template<class Iterator> class Iterator_Traits
-        {
-            public:
-            typedef typename Iterator::value_type value_type;
-        };
+        public:
+        typedef typename Iterator::value_type value_type;
+    };
 
-        template<class Tp> class Iterator_Traits<Tp *>
-        {
-            public:
-            typedef Tp value_type;
-        };
-    }
+    template<class Tp> class Iterator_Traits<Tp *>
+    {
+        public:
+        typedef Tp value_type;
+    };
+}
 #endif
