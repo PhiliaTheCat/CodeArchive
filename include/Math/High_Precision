@@ -1,360 +1,388 @@
 #ifndef __INCLUDED_HIGH_PRECISION__
-    #define __INCLUDED_HIGH_PRECISION__
+#define __INCLUDED_HIGH_PRECISION__
 
-    #include <ostream>
-    #include <istream>
-    #include <iomanip>
+#include <cstdint>
+#include <ostream>
+#include <istream>
+#include <iomanip>
 
-    #define __ARR_SIZE int(1024)
-    #define __BUFF_SIZE int(4096)
+#define __ARR_SIZE std::uint16_t(1024)
+#define __BUFF_SIZE std::uint16_t(4096)
 
-    namespace ptc
+namespace ptc
+{
+    template<std::uint32_t Unit = std::uint32_t(1e4)>
+    class High_Precision;
+
+    template<std::uint32_t Unit>
+    std::istream &operator >>(std::istream &lhs, High_Precision<Unit> &rhs);
+    template<std::uint32_t Unit>
+    std::ostream &operator <<(std::ostream &lhs, const High_Precision<Unit> &rhs);
+    template<std::uint32_t Unit>
+    High_Precision<Unit> operator +(const std::uint32_t &lhs, const High_Precision<Unit> &rhs);
+    template<std::uint32_t Unit>
+    High_Precision<Unit> operator *(const std::uint32_t &lhs, const High_Precision<Unit> &rhs);
+
+    template<std::uint32_t Unit>
+    class High_Precisions
     {
-        template<int Unit = int(1e4)> class High_Precision;
+        private:
+        std::uint16_t n;
+        std::uint32_t arr[__ARR_SIZE];
 
-        template<int Unit> std::istream &operator >>(std::istream &lhs, High_Precision<Unit> &rhs);
-        template<int Unit> std::ostream &operator <<(std::ostream &lhs, const High_Precision<Unit> &rhs);
-        template<int Unit> High_Precision<Unit> operator +(const int &lhs, const High_Precision<Unit> &rhs);
-        template<int Unit> High_Precision<Unit> operator *(const int &lhs, const High_Precision<Unit> &rhs);
+        public:
+        High_Precision(const std::uint32_t &src = 0);
+        High_Precision(const High_Precision &src);
 
-        template<int Unit> class High_Precision
+        ~High_Precision();
+
+        High_Precision &operator =(const High_Precision &rhs);
+
+        bool operator <(const High_Precision &rhs) const;
+
+        bool operator <=(const High_Precision &rhs) const;
+
+        bool operator >(const High_Precision &rhs) const;
+
+        bool operator >=(const High_Precision &rhs) const;
+
+        friend std::istream &ptc::operator >><Unit>(std::istream &lhs, High_Precision<Unit> &rhs);
+
+        friend std::ostream &ptc::operator <<<Unit>(std::ostream &lhs, const High_Precision<Unit> &rhs);
+
+        High_Precision operator +() const;
+        High_Precision operator +(const High_Precision &rhs) const;
+        High_Precision operator +(const std::uint32_t &rhs) const;
+        friend High_Precision<Unit> ptc::operator +<Unit>(const std::uint32_t &lhs, const High_Precision<Unit> &rhs);
+
+        High_Precision &operator +=(const High_Precision &rhs);
+        High_Precision &operator +=(const std::uint32_t &rhs);
+
+        High_Precision operator *(const High_Precision &rhs) const;
+        High_Precision operator *(const std::uint32_t &rhs) const;
+        friend High_Precision<Unit> ptc::operator *<Unit>(const std::uint32_t &lhs, const High_Precision<Unit> &rhs);
+
+        High_Precision &operator *=(const High_Precision &rhs);
+        High_Precision &operator *=(const std::uint32_t &rhs);
+    };
+
+    template<std::uint32_t Unit>
+    High_Precision<Unit>::High_Precision(const std::uint32_t &src)
+    : n(0), arr{}
+    {
+        if (src != 0)
         {
-            private:
-            int n;
-            int arr[__ARR_SIZE];
-
-            public:
-            High_Precision(const int &src = 0);
-            High_Precision(const High_Precision &src);
-
-            ~High_Precision();
-
-            High_Precision &operator =(const High_Precision &rhs);
-
-            bool operator <(const High_Precision &rhs) const;
-
-            bool operator <=(const High_Precision &rhs) const;
-
-            bool operator >(const High_Precision &rhs) const;
-
-            bool operator >=(const High_Precision &rhs) const;
-
-            friend std::istream &ptc::operator >><Unit>(std::istream &lhs, High_Precision<Unit> &rhs);
-
-            friend std::ostream &ptc::operator << <Unit>(std::ostream &lhs, const High_Precision<Unit> &rhs);
-
-            High_Precision operator +() const;
-            High_Precision operator +(const High_Precision &rhs) const;
-            High_Precision operator +(const int &rhs) const;
-            friend High_Precision<Unit> ptc::operator +<Unit>(const int &lhs, const High_Precision<Unit> &rhs);
-
-            High_Precision &operator +=(const High_Precision &rhs);
-            High_Precision &operator +=(const int &rhs);
-
-            High_Precision operator *(const High_Precision &rhs) const;
-            High_Precision operator *(const int &rhs) const;
-            friend High_Precision<Unit> ptc::operator *<Unit>(const int &lhs, const High_Precision<Unit> &rhs);
-
-            High_Precision &operator *=(const High_Precision &rhs);
-            High_Precision &operator *=(const int &rhs);
-        };
-
-        template<int Unit> High_Precision<Unit>::High_Precision(const int &src)
-        : n(0), arr{}
-        {
-            if (src != 0)
+            int temp = src;
+            int i = 0;
+            while (temp > 0)
             {
-                int temp = src;
-                int i = 0;
-                while (temp > 0)
-                {
-                    arr[i] = temp % Unit;
-                    temp /= Unit;
-                    i += 1;
-                }
-                n = i;
-            }
-        }
-
-        template<int Unit> High_Precision<Unit>::High_Precision(const High_Precision &src)
-        : n(src.n), arr{}
-        {
-            for (int i = 0; i < n; i += 1)
-                arr[i] = src.arr[i];
-        }
-
-        template<int Unit> High_Precision<Unit>::~High_Precision()
-        {}
-
-        template<int Unit> High_Precision<Unit> &High_Precision<Unit>::operator =(const High_Precision &rhs)
-        {
-            if (this == &rhs)
-                return *this;
-            n = rhs.n;
-            for (int i = 0; i < n; i += 1)
-                arr[i] = rhs.arr[i];
-            for (int i = n; i < __ARR_SIZE; i += 1)
-                arr[i] = 0;
-            return *this;
-        }
-
-        template<int Unit> bool High_Precision<Unit>::operator <(const High_Precision &rhs) const
-        {
-            if (n < rhs.n)
-                return true;
-            else if (n > rhs.n)
-                return false;
-            else 
-            {
-                for (int i = n - 1; i > -1; i -= 1)
-                {
-                    if (arr[i] < rhs.arr[i])
-                        return true;
-                    else if (arr[i] > rhs.arr[i])
-                        return false;
-                }
-                return false;
-            }
-        }
-
-        template<int Unit> bool High_Precision<Unit>::operator <=(const High_Precision &rhs) const
-        {
-            if (n < rhs.n)
-                return true;
-            else if (n > rhs.n)
-                return false;
-            else 
-            {
-                for (int i = n - 1; i > -1; i -= 1)
-                {
-                    if (arr[i] < rhs.arr[i])
-                        return true;
-                    else if (arr[i] > rhs.arr[i])
-                        return false;
-                }
-                return true;
-            }
-        }
-
-        template<int Unit> bool High_Precision<Unit>::operator >(const High_Precision &rhs) const
-        {
-            if (n > rhs.n)
-                return true;
-            else if (n < rhs.n)
-                return false;
-            else 
-            {
-                for (int i = n - 1; i > -1; i -= 1)
-                {
-                    if (arr[i] > rhs.arr[i])
-                        return true;
-                    else if (arr[i] < rhs.arr[i])
-                        return false;
-                }
-                return false;
-            }
-        }
-
-        template<int Unit> bool High_Precision<Unit>::operator >=(const High_Precision &rhs) const
-        {
-            if (n > rhs.n)
-                return true;
-            else if (n < rhs.n)
-                return false;
-            else 
-            {
-                for (int i = n - 1; i > -1; i -= 1)
-                {
-                    if (arr[i] > rhs.arr[i])
-                        return true;
-                    else if (arr[i] < rhs.arr[i])
-                        return false;
-                }
-                return true;
-            }
-        }
-
-        template<int Unit> std::istream &operator >>(std::istream &lhs, High_Precision<Unit> &rhs)
-        {
-            int cache = 0;
-            char buffer[__BUFF_SIZE + 1];
-            lhs >> buffer;
-            int i = 0, j = 0, k = 0;
-            int diff = -1;
-            while (1)
-            {
-                cache = cache * 10 + buffer[i] - 48;
+                arr[i] = temp % Unit;
+                temp /= Unit;
                 i += 1;
-                if (cache >= Unit)
+            }
+            n = i;
+        }
+    }
+
+    template<std::uint32_t Unit>
+    High_Precision<Unit>::High_Precision(const High_Precision &src)
+    : n(src.n), arr{}
+    {
+        for (int i = 0; i < n; i += 1)
+            arr[i] = src.arr[i];
+    }
+
+    template<std::uint32_t Unit>
+    High_Precision<Unit>::~High_Precision()
+    {}
+
+    template<std::uint32_t Unit>
+    High_Precision<Unit> &High_Precision<Unit>::operator =(const High_Precision &rhs)
+    {
+        if (this == &rhs)
+            return *this;
+        n = rhs.n;
+        for (int i = 0; i < n; i += 1)
+            arr[i] = rhs.arr[i];
+        for (int i = n; i < __ARR_SIZE; i += 1)
+            arr[i] = 0;
+        return *this;
+    }
+
+    template<std::uint32_t Unit>
+    bool High_Precision<Unit>::operator <(const High_Precision &rhs) const
+    {
+        if (n < rhs.n)
+            return true;
+        else if (n > rhs.n)
+            return false;
+        else 
+        {
+            for (int i = n - 1; i > -1; i -= 1)
+            {
+                if (arr[i] < rhs.arr[i])
+                    return true;
+                else if (arr[i] > rhs.arr[i])
+                    return false;
+            }
+            return false;
+        }
+    }
+
+    template<std::uint32_t Unit>
+    bool High_Precision<Unit>::operator <=(const High_Precision &rhs) const
+    {
+        if (n < rhs.n)
+            return true;
+        else if (n > rhs.n)
+            return false;
+        else 
+        {
+            for (int i = n - 1; i > -1; i -= 1)
+            {
+                if (arr[i] < rhs.arr[i])
+                    return true;
+                else if (arr[i] > rhs.arr[i])
+                    return false;
+            }
+            return true;
+        }
+    }
+
+    template<std::uint32_t Unit>
+    bool High_Precision<Unit>::operator >(const High_Precision &rhs) const
+    {
+        if (n > rhs.n)
+            return true;
+        else if (n < rhs.n)
+            return false;
+        else 
+        {
+            for (int i = n - 1; i > -1; i -= 1)
+            {
+                if (arr[i] > rhs.arr[i])
+                    return true;
+                else if (arr[i] < rhs.arr[i])
+                    return false;
+            }
+            return false;
+        }
+    }
+
+    template<std::uint32_t Unit>
+    bool High_Precision<Unit>::operator >=(const High_Precision &rhs) const
+    {
+        if (n > rhs.n)
+            return true;
+        else if (n < rhs.n)
+            return false;
+        else 
+        {
+            for (int i = n - 1; i > -1; i -= 1)
+            {
+                if (arr[i] > rhs.arr[i])
+                    return true;
+                else if (arr[i] < rhs.arr[i])
+                    return false;
+            }
+            return true;
+        }
+    }
+
+    template<std::uint32_t Unit>
+    std::istream &operator >>(std::istream &lhs, High_Precision<Unit> &rhs)
+    {
+        int cache = 0;
+        char buffer[__BUFF_SIZE + 1];
+        lhs >> buffer;
+        int i = 0, j = 0, k = 0;
+        int diff = -1;
+        while (1)
+        {
+            cache = cache * 10 + buffer[i] - 48;
+            i += 1;
+            if (cache >= Unit)
+            {
+                buffer[j] = cache / Unit + 48;
+                j += 1;
+                cache %= Unit;
+                if (diff < 0)
+                    diff = i - j;
+            }
+            else if (diff >= 0)
+            {
+                buffer[j] = '0';
+                j += 1;
+            }
+            if (buffer[i] == 0)
+            {
+                rhs.arr[k] = cache;
+                k += 1;
+                cache = 0;
+                if (diff >= 0)
                 {
-                    buffer[j] = cache / Unit + 48;
-                    j += 1;
-                    cache %= Unit;
-                    if (diff < 0)
-                        diff = i - j;
-                }
-                else if (diff >= 0)
-                {
-                    buffer[j] = '0';
-                    j += 1;
-                }
-                if (buffer[i] == 0)
-                {
-                    rhs.arr[k] = cache;
-                    k += 1;
-                    cache = 0;
-                    if (diff >= 0)
-                    {
-                        while (j + diff < i)
-                        {
-                            buffer[j] = '0';
-                            j += 1;
-                        }
-                    }
-                    else 
+                    while (j + diff < i)
                     {
                         buffer[j] = '0';
                         j += 1;
                     }
-                    buffer[j] = 0;
-                    j = 0;
-                    i = 0;
-                    diff = -1;
                 }
-                if (buffer[0] == '0' && buffer[1] == '\0')
-                    break;
-            }
-            rhs.n = k;
-            if (rhs.n == 1 && rhs.arr[0] == 0)
-                rhs.n = 0;
-            return lhs;
-        }
-
-        template<int Unit> std::ostream &operator <<(std::ostream &lhs, const High_Precision<Unit> &rhs)
-        {
-            if (rhs.n == 0)
-            {
-                lhs << 0;
-                return lhs;
-            }
-            int cap = Unit - 1;
-            int n = 0;
-            while (cap > 0)
-            {
-                cap /= 10;
-                n += 1;
-            };
-            lhs << std::setfill('0');
-            for (int i = rhs.n - 1; i > -1; i -= 1)
-            {
-                if (i == rhs.n - 1)
-                    lhs << rhs.arr[i];
                 else 
-                    lhs << std::setw(n) << rhs.arr[i];
+                {
+                    buffer[j] = '0';
+                    j += 1;
+                }
+                buffer[j] = 0;
+                j = 0;
+                i = 0;
+                diff = -1;
             }
-            lhs << std::setfill('\0');
+            if (buffer[0] == '0' && buffer[1] == '\0')
+                break;
+        }
+        rhs.n = k;
+        if (rhs.n == 1 && rhs.arr[0] == 0)
+            rhs.n = 0;
+        return lhs;
+    }
+
+    template<std::uint32_t Unit>
+    std::ostream &operator <<(std::ostream &lhs, const High_Precision<Unit> &rhs)
+    {
+        if (rhs.n == 0)
+        {
+            lhs << 0;
             return lhs;
         }
-
-        template<int Unit> High_Precision<Unit> High_Precision<Unit>::operator +() const
+        int cap = Unit - 1;
+        int n = 0;
+        while (cap > 0)
         {
-            return High_Precision(*this);
-        }
-
-        template<int Unit> High_Precision<Unit> High_Precision<Unit>::operator +(const High_Precision &rhs) const
+            cap /= 10;
+            n += 1;
+        };
+        lhs << std::setfill('0');
+        for (int i = rhs.n - 1; i > -1; i -= 1)
         {
-            High_Precision res;
-            for (int i = 0; i < __ARR_SIZE; i += 1)
-            {
-                res.arr[i] += arr[i] + rhs.arr[i];
-                if (res.arr[i] >= Unit)
-                {
-                    res.arr[i] -= Unit;
-                    res.arr[i + 1] += 1;
-                }
-            }
-            if (n > rhs.n)
-                res.n = n;
+            if (i == rhs.n - 1)
+                lhs << rhs.arr[i];
             else 
-                res.n = rhs.n;
-            while (res.arr[res.n] != 0)
-                res.n += 1;
-            return res;
+                lhs << std::setw(n) << rhs.arr[i];
         }
+        lhs << std::setfill('\0');
+        return lhs;
+    }
 
-        template<int Unit> High_Precision<Unit> High_Precision<Unit>::operator +(const int &rhs) const 
-        {
-            High_Precision temp = rhs;
-            temp = temp + *this;
-            return temp;
-        }
-    
-        template<int Unit> High_Precision<Unit> operator +(const int &lhs, const High_Precision<Unit> &rhs)
-        {
-            High_Precision<Unit> temp = lhs;
-            temp = temp + rhs;
-            return temp;
-        }
+    template<std::uint32_t Unit>
+    High_Precision<Unit> High_Precision<Unit>::operator +() const
+    {
+        return High_Precision(*this);
+    }
 
-        template<int Unit> High_Precision<Unit> &High_Precision<Unit>::operator +=(const High_Precision &rhs)
+    template<std::uint32_t Unit>
+    High_Precision<Unit> High_Precision<Unit>::operator +(const High_Precision &rhs) const
+    {
+        High_Precision res;
+        for (int i = 0; i < __ARR_SIZE; i += 1)
         {
-            *this = *this + rhs;
-            return *this;
-        }
-
-        template<int Unit> High_Precision<Unit> &High_Precision<Unit>::operator +=(const int &rhs)
-        {
-            *this = *this + rhs;
-            return *this;
-        }
-
-        template<int Unit> High_Precision<Unit> High_Precision<Unit>::operator *(const High_Precision &rhs) const
-        {
-            High_Precision temp;
-            if (n == 0 || rhs.n == 0)
-                return temp;
-            for (int i = 0; i < rhs.n; i += 1)
+            res.arr[i] += arr[i] + rhs.arr[i];
+            if (res.arr[i] >= Unit)
             {
-                for (int j = 0; j < n; j += 1)
+                res.arr[i] -= Unit;
+                res.arr[i + 1] += 1;
+            }
+        }
+        if (n > rhs.n)
+            res.n = n;
+        else 
+            res.n = rhs.n;
+        while (res.arr[res.n] != 0)
+            res.n += 1;
+        return res;
+    }
+
+    template<std::uint32_t Unit>
+    High_Precision<Unit> High_Precision<Unit>::operator +(const std::uint32_t &rhs) const 
+    {
+        High_Precision temp = rhs;
+        temp = temp + *this;
+        return temp;
+    }
+
+    template<std::uint32_t Unit>
+    High_Precision<Unit> operator +(const std::uint32_t &lhs, const High_Precision<Unit> &rhs)
+    {
+        High_Precision<Unit> temp = lhs;
+        temp = temp + rhs;
+        return temp;
+    }
+
+    template<std::uint32_t Unit>
+    High_Precision<Unit> &High_Precision<Unit>::operator +=(const High_Precision &rhs)
+    {
+        *this = *this + rhs;
+        return *this;
+    }
+
+    template<std::uint32_t Unit>
+    High_Precision<Unit> &High_Precision<Unit>::operator +=(const std::uint32_t &rhs)
+    {
+        *this = *this + rhs;
+        return *this;
+    }
+
+    template<std::uint32_t Unit>
+    High_Precision<Unit> High_Precision<Unit>::operator *(const High_Precision &rhs) const
+    {
+        High_Precision temp;
+        if (n == 0 || rhs.n == 0)
+            return temp;
+        for (int i = 0; i < rhs.n; i += 1)
+        {
+            for (int j = 0; j < n; j += 1)
+            {
+                temp.arr[i + j] += rhs.arr[i] * arr[j];
+                if (temp.arr[i + j] >= Unit)
                 {
-                    temp.arr[i + j] += rhs.arr[i] * arr[j];
-                    if (temp.arr[i + j] >= Unit)
-                    {
-                        temp.arr[i + j + 1] += temp.arr[i + j] / Unit;
-                        temp.arr[i + j] %= Unit;
-                    }
+                    temp.arr[i + j + 1] += temp.arr[i + j] / Unit;
+                    temp.arr[i + j] %= Unit;
                 }
             }
-            temp.n = rhs.n + n;
-            while (temp.arr[temp.n - 1] == 0)
-                temp.n -= 1;
-            return temp;
         }
-    
-        template<int Unit> High_Precision<Unit> High_Precision<Unit>::operator *(const int &rhs) const
-        {
-            High_Precision temp = rhs;
-            temp = temp * *this;
-            return temp;
-        }
-
-        template<int Unit> High_Precision<Unit> operator *(const int &lhs, const High_Precision<Unit> &rhs)
-        {
-            High_Precision<Unit> temp = lhs;
-            temp = temp * rhs;
-            return temp;
-        }
-
-        template<int Unit> High_Precision<Unit> &High_Precision<Unit>::operator *=(const High_Precision &rhs)
-        {
-            *this = *this * rhs;
-            return *this;
-        }
-
-        template<int Unit> High_Precision<Unit> &High_Precision<Unit>::operator *=(const int &rhs)
-        {
-            *this = *this * rhs;
-            return *this;
-        }
+        temp.n = rhs.n + n;
+        while (temp.arr[temp.n - 1] == 0)
+            temp.n -= 1;
+        return temp;
     }
+
+    template<std::uint32_t Unit>
+    High_Precision<Unit> High_Precision<Unit>::operator *(const std::uint32_t &rhs) const
+    {
+        High_Precision temp = rhs;
+        temp = temp * *this;
+        return temp;
+    }
+
+    template<std::uint32_t Unit>
+    High_Precision<Unit> operator *(const std::uint32_t &lhs, const High_Precision<Unit> &rhs)
+    {
+        High_Precision<Unit> temp = lhs;
+        temp = temp * rhs;
+        return temp;
+    }
+
+    template<std::uint32_t Unit>
+    High_Precision<Unit> &High_Precision<Unit>::operator *=(const High_Precision &rhs)
+    {
+        *this = *this * rhs;
+        return *this;
+    }
+
+    template<std::uint32_t Unit>
+    High_Precision<Unit> &High_Precision<Unit>::operator *=(const int &rhs)
+    {
+        *this = *this * rhs;
+        return *this;
+    }
+}
 #endif
