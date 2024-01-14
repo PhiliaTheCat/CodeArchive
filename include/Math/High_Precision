@@ -32,9 +32,16 @@ namespace ptc
 
         public:
         High_Precision(const std::uint32_t &src = 0);
-        High_Precision(const High_Precision &src);
 
-        ~High_Precision();
+        inline High_Precision(const High_Precision &src)
+        : n(src.n), arr{}
+        {
+            for (int i = 0; i < n; i += 1)
+                arr[i] = src.arr[i];
+        }
+
+        inline ~High_Precision()
+        {}
 
         High_Precision &operator =(const High_Precision &rhs);
 
@@ -50,20 +57,66 @@ namespace ptc
 
         friend std::ostream &ptc::operator <<<Unit>(std::ostream &lhs, const High_Precision<Unit> &rhs);
 
-        High_Precision operator +() const;
+        inline High_Precision operator +() const
+        {
+            return *this;
+        }
+        
         High_Precision operator +(const High_Precision &rhs) const;
-        High_Precision operator +(const std::uint32_t &rhs) const;
-        friend High_Precision<Unit> ptc::operator +<Unit>(const std::uint32_t &lhs, const High_Precision<Unit> &rhs);
 
-        High_Precision &operator +=(const High_Precision &rhs);
-        High_Precision &operator +=(const std::uint32_t &rhs);
+        inline High_Precision operator +(const std::uint32_t &rhs) const
+        {
+            High_Precision temp = rhs;
+            temp = temp + *this;
+            return temp;
+        }
+
+        inline friend High_Precision<Unit> ptc::operator +<Unit>(const std::uint32_t &lhs, const High_Precision<Unit> &rhs)
+        {
+            High_Precision<Unit> temp = lhs;
+            temp = temp + rhs;
+            return temp;
+        }
+
+        inline High_Precision &operator +=(const High_Precision &rhs)
+        {
+            *this = *this + rhs;
+            return *this;
+        }
+
+        inline High_Precision &operator +=(const std::uint32_t &rhs)
+        {
+            *this = *this + rhs;
+            return *this;
+        }
 
         High_Precision operator *(const High_Precision &rhs) const;
-        High_Precision operator *(const std::uint32_t &rhs) const;
-        friend High_Precision<Unit> ptc::operator *<Unit>(const std::uint32_t &lhs, const High_Precision<Unit> &rhs);
 
-        High_Precision &operator *=(const High_Precision &rhs);
-        High_Precision &operator *=(const std::uint32_t &rhs);
+        inline High_Precision operator *(const std::uint32_t &rhs) const
+        {
+            High_Precision temp = rhs;
+            temp = temp * *this;
+            return temp;
+        }
+
+        inline friend High_Precision<Unit> ptc::operator *<Unit>(const std::uint32_t &lhs, const High_Precision<Unit> &rhs)
+        {
+            High_Precision<Unit> temp = lhs;
+            temp = temp * rhs;
+            return temp;
+        }
+
+        inline High_Precision &operator *=(const High_Precision &rhs)
+        {
+            *this = *this * rhs;
+            return *this;
+        }
+
+        inline High_Precision &operator *=(const std::uint32_t &rhs)
+        {
+            *this = *this * rhs;
+            return *this;
+        }
     };
 
     template<std::uint32_t Unit>
@@ -83,18 +136,6 @@ namespace ptc
             n = i;
         }
     }
-
-    template<std::uint32_t Unit>
-    High_Precision<Unit>::High_Precision(const High_Precision &src)
-    : n(src.n), arr{}
-    {
-        for (int i = 0; i < n; i += 1)
-            arr[i] = src.arr[i];
-    }
-
-    template<std::uint32_t Unit>
-    High_Precision<Unit>::~High_Precision()
-    {}
 
     template<std::uint32_t Unit>
     High_Precision<Unit> &High_Precision<Unit>::operator =(const High_Precision &rhs)
@@ -274,12 +315,6 @@ namespace ptc
     }
 
     template<std::uint32_t Unit>
-    High_Precision<Unit> High_Precision<Unit>::operator +() const
-    {
-        return High_Precision(*this);
-    }
-
-    template<std::uint32_t Unit>
     High_Precision<Unit> High_Precision<Unit>::operator +(const High_Precision &rhs) const
     {
         High_Precision res;
@@ -299,36 +334,6 @@ namespace ptc
         while (res.arr[res.n] != 0)
             res.n += 1;
         return res;
-    }
-
-    template<std::uint32_t Unit>
-    High_Precision<Unit> High_Precision<Unit>::operator +(const std::uint32_t &rhs) const 
-    {
-        High_Precision temp = rhs;
-        temp = temp + *this;
-        return temp;
-    }
-
-    template<std::uint32_t Unit>
-    High_Precision<Unit> operator +(const std::uint32_t &lhs, const High_Precision<Unit> &rhs)
-    {
-        High_Precision<Unit> temp = lhs;
-        temp = temp + rhs;
-        return temp;
-    }
-
-    template<std::uint32_t Unit>
-    High_Precision<Unit> &High_Precision<Unit>::operator +=(const High_Precision &rhs)
-    {
-        *this = *this + rhs;
-        return *this;
-    }
-
-    template<std::uint32_t Unit>
-    High_Precision<Unit> &High_Precision<Unit>::operator +=(const std::uint32_t &rhs)
-    {
-        *this = *this + rhs;
-        return *this;
     }
 
     template<std::uint32_t Unit>
@@ -353,36 +358,6 @@ namespace ptc
         while (temp.arr[temp.n - 1] == 0)
             temp.n -= 1;
         return temp;
-    }
-
-    template<std::uint32_t Unit>
-    High_Precision<Unit> High_Precision<Unit>::operator *(const std::uint32_t &rhs) const
-    {
-        High_Precision temp = rhs;
-        temp = temp * *this;
-        return temp;
-    }
-
-    template<std::uint32_t Unit>
-    High_Precision<Unit> operator *(const std::uint32_t &lhs, const High_Precision<Unit> &rhs)
-    {
-        High_Precision<Unit> temp = lhs;
-        temp = temp * rhs;
-        return temp;
-    }
-
-    template<std::uint32_t Unit>
-    High_Precision<Unit> &High_Precision<Unit>::operator *=(const High_Precision &rhs)
-    {
-        *this = *this * rhs;
-        return *this;
-    }
-
-    template<std::uint32_t Unit>
-    High_Precision<Unit> &High_Precision<Unit>::operator *=(const int &rhs)
-    {
-        *this = *this * rhs;
-        return *this;
     }
 }
 #endif
