@@ -2,6 +2,9 @@
 #define __INCLUDED_HIGH_PRECISION__
 
 #include <cstdint>
+#include <ostream>
+#include <istream>
+#include <cmath>
 
 namespace ptc
 {
@@ -11,7 +14,9 @@ namespace ptc
     class High_Precision;
 
     template<std::uint32_t Unit>
-    High_Precision<Unit> operator +(const uint64_t &lhs, const High_Precision<Unit> &rhs);
+    std::istream &operator >>(std::istream &lhs, High_Precision<Unit> &rhs);
+    template<std::uint32_t Unit>
+    std::ostream &operator <<(std::ostream &lhs, const High_Precision<Unit> &rhs);
 
     template<std::uint32_t Unit>
     class High_Precision
@@ -22,7 +27,7 @@ namespace ptc
         uint16_t n;
 
         public:
-        inline High_Precision(const int64_t &src = 0)
+        High_Precision(const int64_t &src = 0)
         : arr{}
         {
             uint64_t p;
@@ -68,7 +73,10 @@ namespace ptc
             return *this;
         }
 
-        High_Precision operator +(const High_Precision &rhs) const
+        friend std::istream &operator >><Unit>(std::istream &lhs, const High_Precision<Unit> &rhs);
+        inline friend std::ostream &operator <<<Unit>(std::ostream &lhs, const High_Precision<Unit> &rhs);
+
+        High_Precision operator +(const High_Precision &rhs) const noexpect(false)
         {
             High_Precision res;
             int p;
@@ -77,6 +85,11 @@ namespace ptc
                 p = rhs.n;
             else 
                 p = n;
+            
+            if (sign == rhs.sign)
+                res.sign = sign;
+            else 
+                throw "Undefined behaviour!";
             
             bool flag = 0;
             for (int i = 0; i < p; i += 1)
@@ -144,6 +157,55 @@ namespace ptc
             return res;
         }
     };
+
+    template<std::uint32_t Unit>
+    std::istream &operator >>(std::istream &lhs, High_Precision<Unit> &rhs)
+    {
+        char buff[4 * __HIGH_PRECISION_ARR_SIZE + 1];
+        lhs >> buff;
+
+        int i = 0;
+        while (buff[i] != 0)
+            i += 1;
+
+        int count = 0;
+        int t = 0;
+        while (i > -1)
+        {
+            if (i == 0 && buff[i] == '-')
+                sign = true;
+            else if (i == 0 && buff[i] != '-')
+                sign = false;
+            
+            if (buff[i] >= '0' && buff[i] <= '9')
+            {
+                t *= 10;
+                t += buff[i] - '0';
+
+                count += 1;
+                if (count % log10(Unit) == 0)
+                {
+                    rhs.buff[count / 4 - 1] = t;
+                    t = 0;
+                }
+            }
+            i -= 1;
+        }
+
+        return lhs;
+    }
+
+    template<std::uint32_t Unit>
+    std::ostream &operator <<(std::ostream &lhs, const High_Precision<Unit> &rhs)
+    {
+        if (rhs.sign)
+            cout << '-';
+        
+        for (int i = n - 1; i > -1; i -= 1)
+            cout << arr[i];
+        
+        return lhs;
+    }
 }
 
 #endif
