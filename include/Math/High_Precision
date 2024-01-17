@@ -4,6 +4,7 @@
 #include <cstdint>
 #include <ostream>
 #include <istream>
+#include <iomanip>
 #include <cmath>
 
 namespace ptc
@@ -73,10 +74,10 @@ namespace ptc
             return *this;
         }
 
-        friend std::istream &operator >><Unit>(std::istream &lhs, const High_Precision<Unit> &rhs);
+        friend std::istream &operator >><Unit>(std::istream &lhs, High_Precision<Unit> &rhs);
         inline friend std::ostream &operator <<<Unit>(std::ostream &lhs, const High_Precision<Unit> &rhs);
 
-        High_Precision operator +(const High_Precision &rhs) const noexpect(false)
+        High_Precision operator +(const High_Precision &rhs) const noexcept(false)
         {
             High_Precision res;
             int p;
@@ -167,30 +168,35 @@ namespace ptc
         int i = 0;
         while (buff[i] != 0)
             i += 1;
+        
+        if (buff[0] == '-')
+            rhs.sign = true;
+        else if (buff[0] != '-')
+            rhs.sign = false;
+            
 
         int count = 0;
+        int p = 1;
         int t = 0;
+        i -= 1;
         while (i > -1)
         {
-            if (i == 0 && buff[i] == '-')
-                sign = true;
-            else if (i == 0 && buff[i] != '-')
-                sign = false;
-            
             if (buff[i] >= '0' && buff[i] <= '9')
             {
-                t *= 10;
-                t += buff[i] - '0';
-
+                t += (buff[i] - '0') * p;
+                p *= 10;
                 count += 1;
-                if (count % log10(Unit) == 0)
+                if (count % int(log10(Unit)) == 0 || i == 1 && buff[0] == '-' || i == 0)
                 {
-                    rhs.buff[count / 4 - 1] = t;
+                    rhs.arr[(count - 1) / int(log10(Unit))] = t;
                     t = 0;
+                    p = 1;
                 }
             }
             i -= 1;
         }
+
+        rhs.n = (count - 1) / int(log10(Unit)) + 1;
 
         return lhs;
     }
@@ -200,9 +206,10 @@ namespace ptc
     {
         if (rhs.sign)
             cout << '-';
-        
-        for (int i = n - 1; i > -1; i -= 1)
-            cout << arr[i];
+
+        cout << rhs.arr[rhs.n - 1];
+        for (int i = rhs.n - 2; i > -1; i -= 1)
+            cout << setw(int(log10(Unit))) << setfill('0') << rhs.arr[i];
         
         return lhs;
     }
