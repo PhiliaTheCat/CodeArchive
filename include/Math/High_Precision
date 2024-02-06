@@ -8,9 +8,6 @@
 namespace ptc
 {
     template<std::uint16_t __LENGTH = 1024>
-    class High_Precision;
-
-    template<std::uint16_t __LENGTH>
     class High_Precision
     {
         private:
@@ -31,16 +28,28 @@ namespace ptc
         : __bit(src.__bit)
         {}
 
-        inline High_Precision(const High_Precision &&src)
+        inline High_Precision(High_Precision &&src)
         : __bit(src.__bit)
         {}
 
-        friend std::ostream &operator <<(std::ostream &lhs, const High_Precision &rhs)
+        inline High_Precision &operator =(const High_Precision &rhs)
         {
-            if ()
+            __bit = rhs.bit;
+            return *this;
         }
 
-        inline friend High_Precision operator +(const High_Precision &rhs)
+        inline High_Precision &operator =(High_Precision &&rhs)
+        {
+            __bit = rhs.__bit;
+            return *this;
+        }
+
+        friend inline bool operator ==(const High_Precision &lhs, const High_Precision &rhs)
+        {
+            return lhs.__bit == rhs.__bit;
+        }
+
+        friend inline High_Precision operator +(const High_Precision &rhs)
         {
             return rhs;
         }
