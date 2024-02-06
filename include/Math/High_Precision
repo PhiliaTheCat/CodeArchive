@@ -44,17 +44,12 @@ namespace ptc
             return *this;
         }
 
-        friend inline bool operator ==(const High_Precision &lhs, const High_Precision &rhs)
-        {
-            return lhs.__bit == rhs.__bit;
-        }
-
         friend inline High_Precision operator +(const High_Precision &rhs)
         {
             return rhs;
         }
 
-        friend High_Precision operator +(const High_Precision &lhs, const High_Precision &rhs)
+        friend inline High_Precision operator +(const High_Precision &lhs, const High_Precision &rhs)
         {
             High_Precision res;
             bool carry = false;
@@ -66,6 +61,141 @@ namespace ptc
                         rhs.__bit[i] & carry;
             }
             return res;
+        }
+
+        friend inline High_Precision &operator +=(High_Precision &lhs, const High_Precision &rhs)
+        {
+            bool carry = false;
+            bool temp;
+            for (int i = 0; i < __LENGTH; i += 1)
+            {
+                temp = carry ^ lhs.__bit[i] ^ rhs.__bit[i];
+                carry = lhs.__bit[i] & rhs.__bit[i] |
+                        lhs.__bit[i] & carry |
+                        rhs.__bit[i] & carry;
+                lhs.__bit[i] = temp;
+            }
+            return lhs;
+        }
+
+        friend inline High_Precision operator -(const High_Precision &rhs)
+        {
+            High_Precision res = rhs;
+            res.__bit.flip();
+            res += 1;
+            return res;
+        }
+
+        friend inline High_Precision operator -(const High_Precision &lhs, const High_Precision &rhs)
+        {
+            High_Precision temp = rhs;
+            temp.__bit.flip();
+            temp += 1;
+            return lhs + temp;
+        }
+
+        friend inline High_Precision &operator -=(High_Precision &lhs, const High_Precision &rhs)
+        {
+            High_Precision temp = rhs;
+            temp.__bit.flip();
+            temp += 1;
+            lhs += temp;
+            return lhs;
+        }
+
+        friend inline bool operator ==(const High_Precision &lhs, const High_Precision &rhs)
+        {
+            return lhs.__bit == rhs.__bit;
+        }
+
+        friend inline bool operator !=(const High_Precision &lhs, const High_Precision &rhs)
+        {
+            return lhs.__bit != rhs.__bit;
+        }
+
+        friend inline bool operator >(const High_Precision &lhs, const High_Precision &rhs)
+        {
+            High_Precision res = lhs - rhs;
+            if (!res.__bit[__LENGTH - 1] && res != High_Precision(0))
+                return true;
+            else 
+                return false;
+        }
+
+        friend inline bool operator <(const High_Precision &lhs, const High_Precision &rhs)
+        {
+            High_Precision res = lhs - rhs;
+            if (res.__bit[__LENGTH - 1])
+                return true;
+            else 
+                return false;
+        }
+
+        friend inline bool operator >=(const High_Precision &lhs, const High_Precision &rhs)
+        {
+            return !(lhs < rhs);
+        }
+
+        friend inline bool operator <=(const High_Precision &lhs, const High_Precision &rhs)
+        {
+            return !(lhs > rhs);
+        }
+
+        friend inline High_Precision operator >>(const High_Precision &lhs, const uint16_t &rhs)
+        {
+            High_Precision res;
+            res.__bit = lhs.__bit >> rhs;
+            return res;
+        }
+
+        friend inline High_Precision operator <<(const High_Precision &lhs, const uint16_t &rhs)
+        {
+            High_Precision res;
+            res.__bit = lhs.__bit << rhs;
+            return res;
+        }        
+        
+        friend inline High_Precision &operator >>=(High_Precision &lhs, const uint16_t &rhs)
+        {
+            lhs.__bit >> rhs;
+            return lhs;
+        }
+
+        friend inline High_Precision &operator <<=(High_Precision &lhs, const uint16_t &rhs)
+        {
+            lhs.__bit << rhs;
+            return lhs;
+        }
+
+        friend inline High_Precision operator *(const High_Precision &lhs, const High_Precision &rhs)
+        {
+            High_Precision res;
+            High_Precision temp = lhs;
+            for (int i = 0; i < __LENGTH; i += 1)
+            {
+                if (rhs.bit[i])
+                    res += temp;
+                temp << 1;
+            }
+            return res;
+        }
+    
+        friend inline High_Precision &operator *=(High_Precision &lhs, const High_Precision &rhs)
+        {
+            High_Precision temp = lhs;
+            lhs = 0;
+            for (int i = 0; i < __LENGTH; i += 1)
+            {
+                if (rhs.__bit[i])
+                    lhs += temp;
+                temp << 1;
+            }
+            return lhs;
+        }
+    
+        friend inline High_Precision operator /(const High_Precision &lhs, const High_Precision &rhs)
+        {
+            
         }
     };
 }

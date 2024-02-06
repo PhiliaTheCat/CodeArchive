@@ -7,9 +7,6 @@ using namespace std;
 int main()
 {
     ptc::High_Precision<> a = 114514;
-    ptc::High_Precision<> b;
-    cout << (a + 1 == a) << endl
-         << (+a == a) << endl
-         << (&(b = +a) == &a) << endl;
+    cout << (a >= a + 1) << endl;
     return 0;
 }
