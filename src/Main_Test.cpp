@@ -6,7 +6,7 @@ using namespace std;
 
 int main()
 {
-    ptc::High_Precision<> a = 114514;
-    cout << (a >= a + 1) << endl;
+    ptc::High_Precision<8> l = 0x80;
+    cout << l << endl;
     return 0;
 }
