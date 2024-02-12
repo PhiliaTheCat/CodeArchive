@@ -173,9 +173,9 @@ namespace ptc
             High_Precision temp = lhs;
             for (int i = 0; i < __LENGTH; i += 1)
             {
-                if (rhs.bit[i])
+                if (rhs.__bit[i])
                     res += temp;
-                temp << 1;
+                temp <<= 1;
             }
             return res;
         }
@@ -188,7 +188,7 @@ namespace ptc
             {
                 if (rhs.__bit[i])
                     lhs += temp;
-                temp << 1;
+                temp <<= 1;
             }
             return lhs;
         }
