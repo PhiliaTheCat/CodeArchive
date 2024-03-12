@@ -1,5 +1,4 @@
-lib/*.lib
-lib/*.o
-bin/*.exe
-bin/*.out
-.vscode/
+# VS Code Properties
+src/*.obj
+*.exe
+.vscode
