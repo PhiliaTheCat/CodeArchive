@@ -1,4 +1,5 @@
-# VS Code Properties
-src/*.obj
-*.exe
-.vscode
+# CLion Properties
+.idea
+
+# CMake Properties
+cmake-build-debug
