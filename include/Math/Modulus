@@ -1,0 +1,139 @@
+#ifndef __INCLUDED_MODULUS__
+#define __INCLUDED_MODULUS__
+
+#include <cstdint> // For std::int32_t
+#include <istream> // For std::istream
+#include <ostream> // For std::ostream
+
+namespace ptc
+{
+    template<std::int32_t Lim>
+    class Modulus
+    {
+    private:
+        std::int32_t val;
+
+    public:
+        inline explicit Modulus(const std::int32_t &src = 0)
+        {
+            val = src % Lim;
+            if (val < 0)
+                val += Lim;
+        }
+
+        inline Modulus(const Modulus &src)
+            : val(src.val)
+        {}
+
+        inline Modulus(Modulus &&src)
+            : val(src.val)
+        {}
+
+        inline Modulus &operator=(const Modulus &src)
+        {
+            val = src.val;
+        }
+
+        inline Modulus &operator=(Modulus &&src)
+        {
+            val = src.val;
+        }
+
+        inline Modulus operator+() const
+        {
+            return *this;
+        }
+
+        inline Modulus operator-() const
+        {
+            return Modulus(-val);
+        }
+
+        friend inline bool operator==(const Modulus &lhs, const Modulus &rhs)
+        {
+            return lhs.val == rhs.val;
+        }
+
+        friend inline bool operator>(const Modulus &lhs, const Modulus &rhs)
+        {
+            return lhs.val > rhs.val;
+        }
+
+        friend inline bool operator>=(const Modulus &lhs, const Modulus &rhs)
+        {
+            return lhs.val >= rhs.val;
+        }
+
+        friend inline bool operator<(const Modulus &lhs, const Modulus &rhs)
+        {
+            return lhs.val < rhs.val;
+        }
+
+        friend inline bool operator<=(const Modulus &lhs, const Modulus &rhs)
+        {
+            return lhs.val <= rhs.val;
+        }
+
+        friend inline Modulus operator+(const Modulus &lhs, const Modulus &rhs)
+        {
+            return Modulus(lhs.val + rhs.val);
+        }
+
+        friend inline Modulus &operator+=(Modulus &lhs, const Modulus &rhs)
+        {
+            lhs.val += rhs.val;
+            if (lhs.val >= Lim)
+                lhs.val -= Lim;
+
+            return lhs;
+        }
+
+        friend inline Modulus operator-(const Modulus &lhs, const Modulus &rhs)
+        {
+            return Modulus(lhs.val - rhs.val);
+        }
+
+        friend inline Modulus &operator-=(Modulus &lhs, const Modulus &rhs)
+        {
+            lhs.val -= rhs.val;
+            if (lhs.val < 0)
+                lhs.val += Lim;
+
+            return lhs;
+        }
+
+        friend inline Modulus operator*(const Modulus &lhs, const Modulus &rhs)
+        {
+            return Modulus(lhs.val * rhs.val);
+        }
+
+        friend inline Modulus &operator*=(Modulus &lhs, const Modulus &rhs)
+        {
+            lhs.val *= rhs.val;
+            if (lhs.val >= Lim)
+                lhs.val %= Lim;
+
+            return lhs;
+        }
+
+        friend inline std::istream &operator>>(std::istream &lhs, Modulus &rhs)
+        {
+            lhs >> rhs.val;
+
+            rhs.val %= Lim;
+            if (rhs.val < 0)
+                rhs.val += Lim;
+
+            return lhs;
+        }
+
+        friend inline std::ostream &operator<<(std::ostream &lhs, const Modulus &rhs)
+        {
+            lhs << rhs.val;
+
+            return lhs;
+        }
+    };
+}
+
+#endif

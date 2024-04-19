@@ -9,11 +9,9 @@ A semi-permanent repository of useful codes. Updated as my knowledge enriched.
 ## Contents
 
 * Sort (STL Compatible)
-    * Bubble
     * Merge
     * Quick
 * Math
-    * Complex
     * Modulus
 * Traits
     * Iterator Traits

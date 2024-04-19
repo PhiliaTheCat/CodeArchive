@@ -3,13 +3,15 @@
 
 namespace ptc
 {
-    template<class Iterator> class Iterator_Traits
+    template<class Iterator>
+    class Iterator_Traits
     {
         public:
         typedef typename Iterator::value_type value_type;
     };
 
-    template<class Tp> class Iterator_Traits<Tp *>
+    template<class Tp>
+    class Iterator_Traits<Tp *>
     {
         public:
         typedef Tp value_type;
