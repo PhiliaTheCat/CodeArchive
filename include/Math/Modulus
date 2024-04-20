@@ -4,7 +4,6 @@
 #include <cstdint> // For std::int32_t
 #include <istream> // For std::istream
 #include <ostream> // For std::ostream
-
 namespace ptc
 {
     template<std::int32_t Lim>
