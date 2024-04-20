@@ -22,11 +22,11 @@ namespace ptc
         }
 
         inline Modulus(const Modulus &src)
-            : val(src.val)
+        : val(src.val)
         {}
 
         inline Modulus(Modulus &&src)
-            : val(src.val)
+        : val(src.val)
         {}
 
         inline Modulus &operator=(const Modulus &src)
