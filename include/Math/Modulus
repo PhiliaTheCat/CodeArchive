@@ -29,57 +29,57 @@ namespace ptc
         : val(src.val)
         {}
 
-        inline Modulus &operator=(const Modulus &src)
+        inline Modulus &operator =(const Modulus &src)
         {
             val = src.val;
         }
 
-        inline Modulus &operator=(Modulus &&src)
+        inline Modulus &operator =(Modulus &&src)
         {
             val = src.val;
         }
 
-        inline Modulus operator+() const
+        inline Modulus operator +() const
         {
             return *this;
         }
 
-        inline Modulus operator-() const
+        inline Modulus operator -() const
         {
             return Modulus(-val);
         }
 
-        friend inline bool operator==(const Modulus &lhs, const Modulus &rhs)
+        friend inline bool operator ==(const Modulus &lhs, const Modulus &rhs)
         {
             return lhs.val == rhs.val;
         }
 
-        friend inline bool operator>(const Modulus &lhs, const Modulus &rhs)
+        friend inline bool operator >(const Modulus &lhs, const Modulus &rhs)
         {
             return lhs.val > rhs.val;
         }
 
-        friend inline bool operator>=(const Modulus &lhs, const Modulus &rhs)
+        friend inline bool operator >=(const Modulus &lhs, const Modulus &rhs)
         {
             return lhs.val >= rhs.val;
         }
 
-        friend inline bool operator<(const Modulus &lhs, const Modulus &rhs)
+        friend inline bool operator <(const Modulus &lhs, const Modulus &rhs)
         {
             return lhs.val < rhs.val;
         }
 
-        friend inline bool operator<=(const Modulus &lhs, const Modulus &rhs)
+        friend inline bool operator <=(const Modulus &lhs, const Modulus &rhs)
         {
             return lhs.val <= rhs.val;
         }
 
-        friend inline Modulus operator+(const Modulus &lhs, const Modulus &rhs)
+        friend inline Modulus operator +(const Modulus &lhs, const Modulus &rhs)
         {
             return Modulus(lhs.val + rhs.val);
         }
 
-        friend inline Modulus &operator+=(Modulus &lhs, const Modulus &rhs)
+        friend inline Modulus &operator +=(Modulus &lhs, const Modulus &rhs)
         {
             lhs.val += rhs.val;
             if (lhs.val >= Lim)
@@ -88,12 +88,12 @@ namespace ptc
             return lhs;
         }
 
-        friend inline Modulus operator-(const Modulus &lhs, const Modulus &rhs)
+        friend inline Modulus operator -(const Modulus &lhs, const Modulus &rhs)
         {
             return Modulus(lhs.val - rhs.val);
         }
 
-        friend inline Modulus &operator-=(Modulus &lhs, const Modulus &rhs)
+        friend inline Modulus &operator -=(Modulus &lhs, const Modulus &rhs)
         {
             lhs.val -= rhs.val;
             if (lhs.val < 0)
@@ -102,12 +102,12 @@ namespace ptc
             return lhs;
         }
 
-        friend inline Modulus operator*(const Modulus &lhs, const Modulus &rhs)
+        friend inline Modulus operator *(const Modulus &lhs, const Modulus &rhs)
         {
             return Modulus(lhs.val * rhs.val);
         }
 
-        friend inline Modulus &operator*=(Modulus &lhs, const Modulus &rhs)
+        friend inline Modulus &operator *=(Modulus &lhs, const Modulus &rhs)
         {
             lhs.val *= rhs.val;
             if (lhs.val >= Lim)
@@ -116,7 +116,7 @@ namespace ptc
             return lhs;
         }
 
-        friend inline std::istream &operator>>(std::istream &lhs, Modulus &rhs)
+        friend inline std::istream &operator >>(std::istream &lhs, Modulus &rhs)
         {
             lhs >> rhs.val;
 
@@ -127,7 +127,7 @@ namespace ptc
             return lhs;
         }
 
-        friend inline std::ostream &operator<<(std::ostream &lhs, const Modulus &rhs)
+        friend inline std::ostream &operator <<(std::ostream &lhs, const Modulus &rhs)
         {
             lhs << rhs.val;
 
