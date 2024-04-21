@@ -10,9 +10,8 @@
 
 namespace ptc
 {
-    template<class RandomIterator, class Cmpfunc> void Quick_Sort(RandomIterator begin, RandomIterator end, Cmpfunc cmp);
-
-    template<class RandomIterator, class Cmpfunc> void Quick_Sort(RandomIterator begin, RandomIterator end, Cmpfunc cmp)
+    template<class RandomIterator, class Cmpfunc>
+    void Quick_Sort(RandomIterator begin, RandomIterator end, Cmpfunc cmp)
     {
         typedef typename Iterator_Traits<RandomIterator>::value_type value_type;
 
