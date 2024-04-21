@@ -54,6 +54,11 @@ namespace ptc
             return lhs.val == rhs.val;
         }
 
+        friend inline bool operator !=(const Modulus &lhs, const Modulus &rhs)
+        {
+            return lhs.val != rhs.val;
+        }
+
         friend inline bool operator >(const Modulus &lhs, const Modulus &rhs)
         {
             return lhs.val > rhs.val;

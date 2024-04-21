@@ -2,6 +2,14 @@ cmake_minimum_required(VERSION 3.28)
 
 project(CodeArchive)
 
-set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_STANDARD_REQUIRED 17)
 
-add_executable(CodeArchive src/Main_Test.cpp)
+add_subdirectory(../googletest GTest-build)
+
+enable_testing()
+
+add_executable(Modulus_Test test/Modulus_Test.cpp)
+
+target_link_libraries(Modulus_Test GTest::gtest_main)
+
+include(GoogleTest)
