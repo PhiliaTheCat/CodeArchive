@@ -11,5 +11,3 @@ enable_testing()
 add_executable(Modulus_Test test/Modulus_Test.cpp)
 
 target_link_libraries(Modulus_Test GTest::gtest_main)
-
-include(GoogleTest)
