@@ -1,6 +1,6 @@
 #include <gtest/gtest.h>
 
-#include "../include/Math/Modulus"
+#include "Math/Modulus"
 
 using Target = ptc::Modulus<97>;
 

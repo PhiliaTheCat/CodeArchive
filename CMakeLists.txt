@@ -5,9 +5,9 @@ project(CodeArchive)
 set(CMAKE_CXX_STANDARD_REQUIRED 17)
 
 add_subdirectory(../googletest GTest-build)
+include_directories(include)
+link_libraries(GTest::gtest_main)
 
 enable_testing()
 
-add_executable(Modulus_Test test/Modulus_Test.cpp)
-
-target_link_libraries(Modulus_Test GTest::gtest_main)
+add_executable(Modulus_Test test/Math/Modulus_Test.cpp)
