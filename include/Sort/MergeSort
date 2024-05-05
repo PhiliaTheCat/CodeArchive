@@ -76,17 +76,25 @@ namespace ptc
                     j += 1;
                 }
             }
-            while (i < start + (end - start) / 2)
+            if (i < start + (end - start) / 2)
             {
-                *k = *i;
-                k += 1;
-                i += 1;
+                do
+                {
+                    *k = *i;
+                    k += 1;
+                    i += 1;
+                }
+                while (i < start + (end - start) / 2);
             }
-            while (j < end)
+            else if (j < end)
             {
-                *k = *j;
-                k += 1;
-                j += 1;
+                do
+                {
+                    *k = *j;
+                    k += 1;
+                    j += 1;
+                }
+                while (j < end);
             }
 
             // Write back
