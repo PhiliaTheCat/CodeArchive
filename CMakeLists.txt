@@ -11,3 +11,4 @@ link_libraries(GTest::gtest_main)
 enable_testing()
 
 add_executable(Modulus_Test test/Math/Modulus_Test.cpp)
+add_executable(MergeSort_Test test/Sort/MergeSort_Test.cpp)

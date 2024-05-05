@@ -10,5 +10,5 @@ A semi-permanent repository of useful codes. Updated as my knowledge enriched.
 
 * Math
     * Modulus
-* Traits
-    * Iterator Traits
+* Sort
+    * Merge sort

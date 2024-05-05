@@ -1,0 +1,108 @@
+#ifndef __INCLUDED_MERGESORT__
+#define __INCLUDED_MERGESORT__
+
+#include <iterator>
+
+namespace ptc
+{
+    template<class RandomIter, class Func>
+    void MergeSort(RandomIter start, RandomIter end, Func cmp)
+    {
+        typedef RandomIter Iter;
+        typedef typename std::iterator_traits<Iter>::value_type Val;
+        typedef typename std::iterator_traits<Iter>::difference_type Diff;
+
+        // Insertion sort when short
+        const static Diff CAP = 32;
+        if (end - start <= CAP)
+        {
+            for (Iter i = start; i < end; i += 1)
+            {
+                // Locate
+                Iter tar;
+                {
+                    Iter l = start;
+                    Iter r = i;
+                    while (r - l > 1)
+                    {
+                        Iter m = l + (r - l) / 2;
+                        if (!cmp(*i, *m))
+                            l = m;
+                        else
+                            r = m;
+                    }
+                    if (cmp(*i, *l))
+                        tar = l;
+                    else
+                        tar = r;
+                }
+
+                // Insert
+                Val tmp = *i;
+                Iter p = i;
+                while (p != tar)
+                {
+                    *p = *(p - 1);
+                    p -= 1;
+                }
+                *tar = tmp;
+            }
+            return;
+        }
+        // Regular merge sort
+        else
+        {
+            // Division
+            MergeSort(start, start + (end - start) / 2, cmp);
+            MergeSort(start + (end - start) / 2, end, cmp);
+
+            // Merge
+            Val *arr = new Val [end - start];
+            Iter i = start;
+            Iter j = start + (end - start) / 2;
+            Val *k = arr;
+            while (i < start + (end - start) / 2 && j < end)
+            {
+                if (!cmp(*j, *i))
+                {
+                    *k = *i;
+                    k += 1;
+                    i += 1;
+                }
+                else
+                {
+                    *k = *j;
+                    k += 1;
+                    j += 1;
+                }
+            }
+            while (i < start + (end - start) / 2)
+            {
+                *k = *i;
+                k += 1;
+                i += 1;
+            }
+            while (j < end)
+            {
+                *k = *j;
+                k += 1;
+                j += 1;
+            }
+
+            // Write back
+            i = start;
+            k = arr;
+            while (i < end)
+            {
+                *i = *k;
+                k += 1;
+                i += 1;
+            }
+
+            delete [] arr;
+            return;
+        }
+    }
+}
+
+#endif
