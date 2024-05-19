@@ -32,11 +32,15 @@ namespace ptc
         inline Modulus &operator =(const Modulus &src)
         {
             val = src.val;
+
+            return *this;
         }
 
         inline Modulus &operator =(Modulus &&src)
         {
             val = src.val;
+
+            return *this;
         }
 
         inline Modulus operator +() const
