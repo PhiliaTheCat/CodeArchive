@@ -53,3 +53,18 @@ TEST(MergeSort_Test, LongNativeArray)
     for (int i = 0; i < 39; i += 1)
         EXPECT_TRUE(!cmp(arr[i + 1], arr[i])) << i << ' ' << arr[i] << ' ' << arr[i - 1];
 }
+
+TEST(MergeSort_Test, WorstCondition)
+{
+    int *arr = new int [int(1e7)];
+    for (int i = 0; i < int(1e7); i += 1)
+        arr[i] = int(5e6) - 0;
+
+    ptc::MergeSort(arr, arr + int(1e7), cmp);
+
+    for (int i = 1; i < int(1e7); i += 1)
+        EXPECT_TRUE(!cmp(arr[i], arr[i - 1]));
+
+    delete [] arr;
+}
+
