@@ -14,34 +14,24 @@ namespace ptc
         std::int32_t val;
 
     public:
-        inline explicit Modulus(const std::int32_t &src = 0)
+        Modulus() = default;
+
+        inline explicit Modulus(const std::int32_t &src)
         {
             val = src % Lim;
             if (val < 0)
                 val += Lim;
         }
 
-        inline Modulus(const Modulus &src)
-        : val(src.val)
-        {}
+        Modulus(const Modulus &) = default;
 
-        inline Modulus(Modulus &&src)
-        : val(src.val)
-        {}
+        Modulus(Modulus &&) = default;
 
-        inline Modulus &operator =(const Modulus &src)
-        {
-            val = src.val;
+        ~Modulus() = default;
 
-            return *this;
-        }
+        Modulus &operator =(const Modulus &) = default;
 
-        inline Modulus &operator =(Modulus &&src)
-        {
-            val = src.val;
-
-            return *this;
-        }
+        Modulus &operator =(Modulus &&) = default;
 
         inline Modulus operator +() const
         {
