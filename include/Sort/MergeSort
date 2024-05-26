@@ -13,8 +13,8 @@ namespace ptc
         typedef typename std::iterator_traits<Iter>::difference_type Diff;
 
         static const Diff CAP = 32;
-        // Insertion sort when short
         if (end - start <= CAP)
+            // Insertion sort if short
         {
             for (Iter i = start; i < end; i += 1)
             {
@@ -49,8 +49,8 @@ namespace ptc
             }
             return;
         }
-        // Regular merge sort
         else
+            // Regular merge sort
         {
             // Division
             MergeSort(start, start + (end - start) / 2, cmp);
