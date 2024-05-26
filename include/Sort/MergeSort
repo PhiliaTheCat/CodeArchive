@@ -12,8 +12,8 @@ namespace ptc
         typedef typename std::iterator_traits<Iter>::value_type Val;
         typedef typename std::iterator_traits<Iter>::difference_type Diff;
 
-        // Insertion sort when short
         static const Diff CAP = 32;
+        // Insertion sort when short
         if (end - start <= CAP)
         {
             for (Iter i = start; i < end; i += 1)
@@ -57,7 +57,7 @@ namespace ptc
             MergeSort(start + (end - start) / 2, end, cmp);
 
             // Merge
-            Val *arr = new Val [end - start];
+            Val *arr = new Val[end - start];
             Iter i = start;
             Iter j = start + (end - start) / 2;
             Val *k = arr;
@@ -107,7 +107,7 @@ namespace ptc
                 i += 1;
             }
 
-            delete [] arr;
+            delete[] arr;
             return;
         }
     }
