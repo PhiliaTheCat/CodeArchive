@@ -3,7 +3,10 @@
 
 #include "Sort/MergeSort"
 
-const auto &cmp = [](const int &l, const int &r) -> bool {return l < r;};
+const auto &cmp = [](const int &l, const int &r) -> bool
+{
+    return l < r;
+};
 
 TEST(MergeSort_Test, ShortNativeArray)
 {
