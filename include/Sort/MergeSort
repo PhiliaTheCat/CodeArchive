@@ -6,7 +6,7 @@
 namespace ptc
 {
     template<class RandomIter, class Func>
-    void MergeSort(RandomIter start, RandomIter end, Func cmp)
+    void mergeSort(RandomIter start, RandomIter end, Func cmp)
     {
         using Iter = RandomIter;
         using Val = typename std::iterator_traits<Iter>::value_type;
@@ -53,8 +53,8 @@ namespace ptc
 
         // Regular merge sort
         // Division
-        MergeSort(start, start + (end - start) / 2, cmp);
-        MergeSort(start + (end - start) / 2, end, cmp);
+        mergeSort(start, start + (end - start) / 2, cmp);
+        mergeSort(start + (end - start) / 2, end, cmp);
 
         // Merge
         Val *arr = new Val[end - start];
