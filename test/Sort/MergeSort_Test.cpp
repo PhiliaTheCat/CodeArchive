@@ -23,7 +23,7 @@ TEST(MergeSort_Test, ShortNativeArray)
 
 TEST(MergeSort_Test, ShortVector)
 {
-    std::vector<int, std::allocator<int>> arr =
+    std::vector<int> arr =
     {
         1, 3, 7, 9, 11,
         12, 6, 0, 15, 14,
