@@ -8,17 +8,18 @@ namespace ptc
     template<class RandomIter, class Func>
     void MergeSort(RandomIter start, RandomIter end, Func cmp)
     {
-        typedef RandomIter Iter;
-        typedef typename std::iterator_traits<Iter>::value_type Val;
-        typedef typename std::iterator_traits<Iter>::difference_type Diff;
+        using Iter = RandomIter;
+        using Val = typename std::iterator_traits<Iter>::value_type;
+        using Diff = typename std::iterator_traits<Iter>::difference_type;
 
         static const Diff CAP = 32;
+
         if (end - start <= CAP)
-            // Insertion sort if short
+        // Insertion sort if short
         {
             for (Iter i = start; i < end; i += 1)
             {
-                // Locate
+                // Search
                 Iter tar;
                 {
                     Iter l = start;
@@ -49,67 +50,64 @@ namespace ptc
             }
             return;
         }
-        else
-            // Regular merge sort
+
+        // Regular merge sort
+        // Division
+        MergeSort(start, start + (end - start) / 2, cmp);
+        MergeSort(start + (end - start) / 2, end, cmp);
+
+        // Merge
+        Val *arr = new Val[end - start];
+        Iter i = start;
+        Iter j = start + (end - start) / 2;
+        Val *k = arr;
+        while (i < start + (end - start) / 2 && j < end)
         {
-            // Division
-            MergeSort(start, start + (end - start) / 2, cmp);
-            MergeSort(start + (end - start) / 2, end, cmp);
-
-            // Merge
-            Val *arr = new Val[end - start];
-            Iter i = start;
-            Iter j = start + (end - start) / 2;
-            Val *k = arr;
-            while (i < start + (end - start) / 2 && j < end)
+            if (!cmp(*j, *i))
             {
-                if (!cmp(*j, *i))
-                {
-                    *k = *i;
-                    k += 1;
-                    i += 1;
-                }
-                else
-                {
-                    *k = *j;
-                    k += 1;
-                    j += 1;
-                }
-            }
-            if (i < start + (end - start) / 2)
-            {
-                do
-                {
-                    *k = *i;
-                    k += 1;
-                    i += 1;
-                }
-                while (i < start + (end - start) / 2);
-            }
-            else if (j < end)
-            {
-                do
-                {
-                    *k = *j;
-                    k += 1;
-                    j += 1;
-                }
-                while (j < end);
-            }
-
-            // Write back
-            i = start;
-            k = arr;
-            while (i < end)
-            {
-                *i = *k;
+                *k = *i;
                 k += 1;
                 i += 1;
             }
-
-            delete[] arr;
-            return;
+            else
+            {
+                *k = *j;
+                k += 1;
+                j += 1;
+            }
         }
+        if (i < start + (end - start) / 2)
+        {
+            do
+            {
+                *k = *i;
+                k += 1;
+                i += 1;
+            }
+            while (i < start + (end - start) / 2);
+        }
+        else if (j < end)
+        {
+            do
+            {
+                *k = *j;
+                k += 1;
+                j += 1;
+            }
+            while (j < end);
+        }
+
+        // Write back
+        i = start;
+        k = arr;
+        while (i < end)
+        {
+            *i = *k;
+            k += 1;
+            i += 1;
+        }
+
+        delete[] arr;
     }
 }
 
