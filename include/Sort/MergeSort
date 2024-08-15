@@ -2,11 +2,12 @@
 #define __INCLUDED_MERGESORT__
 
 #include <iterator>
+#include <type_traits>
 
 namespace ptc
 {
-    template<class RandomIter, class Func>
-    void mergeSort(RandomIter start, RandomIter end, Func cmp)
+    template<class RandomIter, class Func = std::less<typename std::iterator_traits<RandomIter>::value_type>>
+    void mergeSort(RandomIter start, RandomIter end, Func cmp = Func{})
     {
         using Iter = RandomIter;
         using Val = typename std::iterator_traits<Iter>::value_type;
