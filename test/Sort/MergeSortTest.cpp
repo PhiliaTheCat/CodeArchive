@@ -1,6 +1,5 @@
 #include <gtest/gtest.h>
 #include <vector>
-#include <type_traits>
 
 #include "Sort/MergeSort"
 
