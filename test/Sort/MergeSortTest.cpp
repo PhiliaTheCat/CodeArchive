@@ -1,7 +1,7 @@
 #include <gtest/gtest.h>
 #include <vector>
 
-#include "Sort/MergeSort"
+#include "Sort"
 
 const auto &cmp = [](const int &l, const int &r) -> bool { return l < r; };
 
