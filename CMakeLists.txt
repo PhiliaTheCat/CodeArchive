@@ -11,5 +11,5 @@ include_directories(include)
 
 link_libraries(GTest::gtest_main)
 
-add_executable(Modulus_Test test/Math/Modulus_Test.cpp)
-add_executable(MergeSort_Test test/Sort/MergeSort_Test.cpp)
+add_executable(Modulus_Test test/Math/ModulusTest.cpp)
+add_executable(MergeSort_Test test/Sort/MergeSortTest.cpp)
