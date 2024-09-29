@@ -6,12 +6,6 @@
 namespace ptc
 {
     template<class RandomIter, class Compare = std::less<typename std::iterator_traits<RandomIter>::value_type>>
-    void mergeSort(RandomIter start, RandomIter end, Compare cmp = Compare{});
-
-    template<class RandomIter, class Compare = std::less<typename std::iterator_traits<RandomIter>::value_type>>
-    void quickSort(RandomIter start, RandomIter end, Compare cmp = Compare{});
-
-    template<class RandomIter, class Compare = std::less<typename std::iterator_traits<RandomIter>::value_type>>
     void insertionSort(RandomIter start, RandomIter end, Compare cmp = Compare{});
 
     template<class RandomIter, class Compare>
