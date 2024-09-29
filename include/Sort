@@ -14,8 +14,8 @@ namespace ptc
     template<class RandomIter, class Compare = std::less<typename std::iterator_traits<RandomIter>::value_type>>
     void insertionSort(RandomIter start, RandomIter end, Compare cmp = Compare{});
 
-    template<class RandomIter, class Func = std::less<typename std::iterator_traits<RandomIter>::value_type>>
-    void mergeSort(RandomIter start, RandomIter end, Func cmp)
+    template<class RandomIter, class Compare>
+    void mergeSort(RandomIter start, RandomIter end, Compare cmp)
     {
         using Iter = RandomIter;
         using Val = typename std::iterator_traits<Iter>::value_type;
@@ -119,7 +119,7 @@ namespace ptc
         delete[] arr;
     }
 
-    template<class RandomIter, class Compare = std::less<typename std::iterator_traits<RandomIter>::value_type>>
+    template<class RandomIter, class Compare>
     void quickSort(RandomIter start, RandomIter end, Compare cmp)
     {
         using Iter = RandomIter;
@@ -173,7 +173,7 @@ namespace ptc
         quickSort(r + 1, end, cmp);
     }
 
-    template<class RandomIter, class Compare = std::less<typename std::iterator_traits<RandomIter>::value_type>>
+    template<class RandomIter, class Compare>
     void insertionSort(RandomIter start, RandomIter end, Compare cmp)
     {
         using Iter = RandomIter;
