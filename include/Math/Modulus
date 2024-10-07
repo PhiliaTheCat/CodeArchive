@@ -2,15 +2,13 @@
 #define __INCLUDED_MODULUS__
 
 #include <cstdint> // For std::int32_t
-#include <istream> // For std::istream
-#include <ostream> // For std::ostream
+#include <iosfwd>
 
 namespace ptc
 {
     template<std::int32_t Lim>
     class Modulus
     {
-    private:
         std::int32_t val;
 
     public:
@@ -24,13 +22,11 @@ namespace ptc
         }
 
         Modulus(const Modulus &) = default;
-
         Modulus(Modulus &&) = default;
 
         ~Modulus() = default;
 
         Modulus &operator =(const Modulus &) = default;
-
         Modulus &operator =(Modulus &&) = default;
 
         Modulus operator +() const
@@ -40,7 +36,7 @@ namespace ptc
 
         Modulus operator -() const
         {
-            return Modulus(-val);
+            return { -val };
         }
 
         friend bool operator ==(const Modulus &lhs, const Modulus &rhs)
