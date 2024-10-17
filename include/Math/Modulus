@@ -26,26 +26,26 @@ namespace ptc
 
         ~Modulus() = default;
 
-        Modulus &operator =(const Modulus &)& = default;
-        Modulus &operator =(Modulus &&)& = default;
+        Modulus &operator =(const Modulus &) & = default;
+        Modulus &operator =(Modulus &&) & = default;
 
-        Modulus operator +()const&
+        Modulus operator +() const &
         {
             return *this;
         }
 
-        Modulus operator -()const&
+        Modulus operator -() const &
         {
             return Modulus{ -val };
         }
 
-        Modulus &operator ++()&
+        Modulus &operator ++() &
         {
             ++val;
             return *this;
         }
 
-        Modulus &operator --()&
+        Modulus &operator --() &
         {
             --val;
             return *this;
