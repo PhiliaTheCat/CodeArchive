@@ -31,7 +31,7 @@ namespace ptc
 
         Modulus operator +() const & { return *this; }
 
-        Modulus operator -() const & { return Modulus{ -val }; }
+        Modulus operator -() const & { return Modulus { -val }; }
 
         Modulus &operator ++() &
         {

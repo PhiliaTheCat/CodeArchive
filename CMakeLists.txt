@@ -1,11 +1,11 @@
 cmake_minimum_required(VERSION 3.18)
 
-project(CodeArchive C CXX)
+project(CodeArchive CXX)
 
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_STANDARD 17)
 
-add_subdirectory(../googletest GTest-build)
+find_package(GTest)
 
 include_directories(include)
 
