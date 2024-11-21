@@ -5,7 +5,7 @@ project(CodeArchive CXX)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_STANDARD 17)
 
-find_package(GTest)
+find_package(GTest 1.15.2 REQUIRED)
 
 include_directories(include)
 
