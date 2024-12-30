@@ -1,9 +1,11 @@
 cmake_minimum_required(VERSION 3.18)
 
-project(CodeArchive CXX)
+project(CodeArchive)
 
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_STANDARD 17)
+
+include(CTest)
 
 find_package(GTest 1.15.2 REQUIRED)
 
@@ -11,5 +13,8 @@ include_directories(include)
 
 link_libraries(GTest::gtest_main)
 
-add_executable(Modulus_Test test/Math/ModulusTest.cpp)
-add_executable(MergeSort_Test test/Sort/MergeSortTest.cpp)
+add_executable(ModulusTest test/Math/ModulusTest.cpp)
+add_executable(MergeSortTest test/Sort/MergeSortTest.cpp)
+
+add_test(NAME Math COMMAND ModulusTest)
+add_test(NAME Sort COMMAND MergeSortTest)
