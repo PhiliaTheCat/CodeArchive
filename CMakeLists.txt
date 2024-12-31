@@ -13,8 +13,8 @@ include_directories(include)
 
 link_libraries(GTest::gtest_main)
 
-add_executable(ModulusTest test/Math/ModulusTest.cpp)
-add_executable(MergeSortTest test/Sort/MergeSortTest.cpp)
+add_executable(ModulusTest test/ModulusTest.cpp)
+add_executable(MergeSortTest test/SortTest.cpp)
 
 add_test(NAME Math COMMAND ModulusTest)
 add_test(NAME Sort COMMAND MergeSortTest)

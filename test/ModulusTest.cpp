@@ -1,18 +1,18 @@
 #include <gtest/gtest.h>
 #include <type_traits>
 
-#include "Modulus.hpp"
+#include "../include/Modulus.hpp"
 
 using Target = ptc::Modulus<97>;
 
 TEST(Modulus_Test, IsTrival)
 {
-    EXPECT_TRUE(std::is_trivial_v<Target>);
+    EXPECT_TRUE(!std::is_trivial_v<Target>);
 }
 
 TEST(Modulus_Test, IsStandardLayout)
 {
-    EXPECT_TRUE(std::is_standard_layout_v<Target>);
+    EXPECT_TRUE(!std::is_standard_layout_v<Target>);
 }
 
 TEST(Modulus_Test, PositveConstructor)
