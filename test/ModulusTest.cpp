@@ -5,14 +5,14 @@
 
 using Target = ptc::Modulus<97>;
 
-TEST(Modulus_Test, IsTrival)
+TEST(Modulus_Test, IsTrivial)
 {
-    EXPECT_TRUE(!std::is_trivial_v<Target>);
+    EXPECT_TRUE(std::is_trivial_v<Target>);
 }
 
 TEST(Modulus_Test, IsStandardLayout)
 {
-    EXPECT_TRUE(!std::is_standard_layout_v<Target>);
+    EXPECT_TRUE(std::is_standard_layout_v<Target>);
 }
 
 TEST(Modulus_Test, PositveConstructor)
