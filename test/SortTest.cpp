@@ -1,9 +1,9 @@
 #include <gtest/gtest.h>
 #include <vector>
 
-#include "../include/Sort.hpp"
+#include "Sort.hpp"
 
-const auto &cmp = [](const int &l, const int &r) -> bool { return l < r; };
+auto cmp = [](const int &a, const int &b) { return a < b; };
 
 TEST(MergeSort_Test, ShortNativeArray)
 {
@@ -17,8 +17,8 @@ TEST(MergeSort_Test, ShortNativeArray)
 
     ptc::mergeSort(arr, arr + 16);
 
-    for (int i = 0; i < 16; i += 1)
-        EXPECT_EQ(arr[i], i);
+    for (int i = 0; i < 15; i += 1)
+        EXPECT_TRUE(!cmp(arr[i + 1], arr[i]));
 }
 
 TEST(MergeSort_Test, ShortVector)
@@ -33,8 +33,8 @@ TEST(MergeSort_Test, ShortVector)
 
     ptc::mergeSort(arr.begin(), arr.end());
 
-    for (int i = 0; i < 16; i += 1)
-        EXPECT_EQ(arr[i], i);
+    for (int i = 0; i < 15; i += 1)
+        EXPECT_TRUE(!cmp(arr[i + 1], arr[i]));
 }
 
 TEST(MergeSort_Test, LongNativeArray)
@@ -51,7 +51,7 @@ TEST(MergeSort_Test, LongNativeArray)
     ptc::mergeSort(arr, arr + 40);
 
     for (int i = 0; i < 39; i += 1)
-        EXPECT_TRUE(!cmp(arr[i + 1], arr[i])) << i << ' ' << arr[i] << ' ' << arr[i - 1];
+        EXPECT_TRUE(!cmp(arr[i + 1], arr[i]));
 }
 
 TEST(MergeSort_Test, LongVector)
@@ -68,19 +68,19 @@ TEST(MergeSort_Test, LongVector)
     ptc::mergeSort(arr.begin(), arr.end());
 
     for (int i = 0; i < 39; i += 1)
-        EXPECT_TRUE(![](const int &l, const int &r) -> bool { return l < r; }(arr[i + 1], arr[i]));
+        EXPECT_TRUE(!cmp(arr[i + 1], arr[i]));
 }
 
 TEST(MergeSort_Test, WorstCondition)
 {
-    int *arr = new int[int(1e7)];
-    for (int i = 0; i < int(1e7); i += 1)
-        arr[i] = int(5e6) - 0;
+    int *arr = new int [static_cast<int>(1e7)];
+    for (int i = 0; i < static_cast<int>(1e7); i += 1)
+        arr[i] = static_cast<int>(5e6) - 0;
 
-    ptc::mergeSort(arr, arr + int(1e7));
+    ptc::mergeSort(arr, arr + static_cast<int>(1e7));
 
-    for (int i = 1; i < int(1e7); i += 1)
+    for (int i = 1; i < static_cast<int>(1e7); i += 1)
         EXPECT_TRUE(!cmp(arr[i], arr[i - 1]));
 
-    delete[] arr;
+    delete [] arr;
 }

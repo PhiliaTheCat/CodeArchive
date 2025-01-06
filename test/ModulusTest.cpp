@@ -1,7 +1,7 @@
 #include <gtest/gtest.h>
 #include <type_traits>
 
-#include "../include/Modulus.hpp"
+#include "Modulus.hpp"
 
 using Target = ptc::Modulus<97>;
 
