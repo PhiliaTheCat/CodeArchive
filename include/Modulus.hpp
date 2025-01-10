@@ -2,7 +2,8 @@
 #define __INCLUDED_MODULUS__
 
 #include <cstdint> // For std::int32_t
-#include <iosfwd>
+#include <ostream>
+#include <istream>
 
 namespace ptc
 {
@@ -39,10 +40,26 @@ namespace ptc
             return *this;
         }
 
+        Modulus operator ++(int) &
+        {
+            Modulus ret = *this;
+
+            ++val;
+            return ret;
+        }
+
         Modulus &operator --() &
         {
             --val;
             return *this;
+        }
+
+        Modulus operator --(int) &
+        {
+            Modulus ret = *this;
+
+            --val;
+            return ret;
         }
 
         friend bool operator ==(const Modulus &lhs, const Modulus &rhs)

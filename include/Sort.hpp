@@ -1,6 +1,7 @@
 #ifndef __INCLUDED_SORT__
 #define __INCLUDED_SORT__
 
+#include <functional>
 #include <iterator>
 
 namespace ptc
@@ -58,42 +59,9 @@ namespace ptc
 
         static const Diff CAP = 32;
 
+        // Insertion sort if short enough
         if (end - start <= CAP)
-        // Insertion sort if short
-        {
-            for (Iter i = start; i < end; i += 1)
-            {
-                // Search
-                Iter tar;
-                {
-                    Iter l = start;
-                    Iter r = i;
-                    while (r - l > 1)
-                    {
-                        Iter m = l + (r - l) / 2;
-                        if (!cmp(*i, *m))
-                            l = m;
-                        else
-                            r = m;
-                    }
-                    if (cmp(*i, *l))
-                        tar = l;
-                    else
-                        tar = r;
-                }
-
-                // Insert
-                Val tmp = *i;
-                Iter p = i;
-                while (p != tar)
-                {
-                    *p = *(p - 1);
-                    p -= 1;
-                }
-                *tar = tmp;
-            }
-            return;
-        }
+            return insertionSort(start, end, cmp);
 
         // Regular merge sort
         // Division
@@ -152,60 +120,6 @@ namespace ptc
         }
 
         delete[] arr;
-    }
-
-    template<class RandomIter, class Compare = std::less<typename std::iterator_traits<RandomIter>::value_type>>
-    void quickSort(RandomIter start, RandomIter end, Compare cmp = Compare {})
-    {
-        using Iter = RandomIter;
-        using Val = typename std::iterator_traits<Iter>::value_type;
-        using Diff = typename std::iterator_traits<Iter>::difference_type;
-
-        static const Diff CAP = 32;
-        if (end - start <= CAP)
-            return insertionSort(start, end, cmp);
-
-        Val p = *(start + (end - start) / 3);
-        Iter l = start, r = end - 1;
-        while (true)
-        {
-            while (l < r && !cmp(p, *l))
-                l += 1;
-            while (l < r && !cmp(*r, p))
-                r -= 1;
-
-            if (l == r)
-                break;
-
-            std::swap(*l, *r);
-        }
-
-        std::swap(*(start + (end - start) / 3), *l);
-
-        Iter i = start;
-        while (i < l)
-        {
-            if (*i == p)
-            {
-                l -= 1;
-                std::swap(*i, *l);
-            }
-            i += 1;
-        }
-
-        i = end - 1;
-        while (i > r)
-        {
-            if (*i == p)
-            {
-                r += 1;
-                std::swap(*r, *i);
-            }
-            i -= 1;
-        }
-
-        quickSort(start, l, cmp);
-        quickSort(r + 1, end, cmp);
     }
 }
 
